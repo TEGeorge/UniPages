@@ -12,14 +12,13 @@ body header {
   width: 75%;
 }
 
-header h1 {
+header #page_title{
   display: inline-block;
   font-weight: normal;
 }
 
 ul {
   list-style: none;
-  display: inline-block;
   float: right;
 }
 ul li {
@@ -98,8 +97,13 @@ nav {
   padding-left: 5px;
   padding-right: 5px;
 }
+.comment {
+  border-style: groove;
+  width: 95%;
+  margin: 0 auto;
+}
 
-.post .author {
+.post .post_info {
   margin: auto;
   color: #00628B;
 }
