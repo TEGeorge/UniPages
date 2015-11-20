@@ -3,64 +3,90 @@
   <link rel="stylesheet" type="text/css" href="mystyle.css">
   <script src="eventscript.js" charset="utf-8"></script>
   <script src="api/ajax.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
   <head>
      <title>UniPages</title>
   </head>
 
   <body>
-    <header>
-      <h1 id="page_title">UniPages</h1>
-      <ul>
-        <li>
-          Profile
-        </li>
-      </ul>
-    </header>
-    <div id="container">
-      <div id="container_info">
-        <div id="main_info">
-          <img id="profile_picture" src="profile.jpg" alt="Profile Picture" style="width:320px;height:240px;">
-            <div id="details">
-              <p>
-                Name: Bubbles Mcgee
-              </p>
-              <p>
-                University: University Of Portsmouth
-              </p>
-              <p>
-                Course: (BSC) Computer Science
-              </p>
-              <p>
-                Year: 2nd
-              </p>
+    <div class="jumbotron">
+      <h1>UniPages</h1>
+    </div>
+    <div class="row">
+      <div class="col-sm-8">
+        <ul class="nav nav-tabs nav-justified">
+          <li role="dynamic" class="active"><a href="#">Posts</a></li>
+          <li role="dynamic"><a href="#">University</a></li>
+          <li role="dynamic"><a href="#">Course</a></li>
+          <li role="dynamic"><a href="#">Groups</a></li>
+          <li role="dynamic"><a href="#">Search</a></li>
+        </ul>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <p> * </p>
+            <p> * </p>
+            <p> * </p>
+            <p> * </p>
+            <p> * </p>
+            <p> * </p>
+            <p> * </p>
+            <p> * </p>
+            <p> * </p>
+            <p> * </p>
+            <p> * </p>
+            <div class="col-sm-12">
+              <div class="panel panel-default">
+                <h4 class="panel-heading"><a href="#">Joe Bloggs</a> in <a href="#">WebScript</a> - 17/12/15</h4>
+                <div class="panel-body">
+                  <p>Last lecture was fantastic!</p>
+                </div>
+                <div class="col-sm-1"></div>
+                  <div class="col-sm-11 panel panel-default">
+                    <h4 class="panel-heading"><a href="#">Jim Foo</a> - 18/12/15</h4>
+                    <div class="panel-body">
+                      <p>b-52!!</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="panel panel-default">
+          <div class="panel-title">
+            <h2 class="panel-heading">Profile</h2>
+          </div>
+          <div class="panel-body">
+            <img src="profile.png" alt="" class="img-circle">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label class="control-label col-sm-3">Name:</label>
+                <div class="col-sm-9">
+                  <p class="form-control-static">Joe Bloggs</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Course:</label>
+                <div class="col-sm-9">
+                  <p class="form-control-static">Computer Science BSC</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Year Group:</label>
+                <div class="col-sm-9">
+                  <p class="form-control-static">2nd</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">Social Media:</label>
+                <div class="col-sm-9">
+                  <a class="form-control-static"href="#">Facebook</a>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
-      <div id="navbar">
-        <nav>
-          <input id="posts.flip" type="radio" name="top" form="pageselect" checked="">
-          <label for="posts.flip">
-            Posts
-          </label>
-          <input id="uni.flip" type="radio" name="top" form="pageselect">
-          <label for="uni.flip">
-            University
-          </label>
-          <input id="course.flip" type="radio" name="top" form="pageselect">
-          <label for="course.flip">
-            Course
-          </label>
-          <input id="groups.flip" type="radio" name="top" form="pageselect">
-          <label for="groups.flip">
-            Groups
-          </label>
-          <input id="search.flip" type="radio" name="top" form="pageselect">
-          <label for="search.flip">
-            Search
-          </label>
-        </nav>
-      </div>
-      <div id="dynmic_content">
       </div>
     </div>
   </body>
