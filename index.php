@@ -1,8 +1,5 @@
 <!doctype html>
 <html>
-  <link rel="stylesheet" type="text/css" href="mystyle.css">
-  <script src="eventscript.js" charset="utf-8"></script>
-  <script src="api/ajax.js" charset="utf-8"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -11,9 +8,7 @@
   </head>
 
   <body>
-    <div class="jumbotron">
-      <h1>UniPages</h1>
-    </div>
+    <?php include 'header.php'; ?>
     <div class="row">
       <div class="col-sm-8">
         <ul class="nav nav-tabs nav-justified">
