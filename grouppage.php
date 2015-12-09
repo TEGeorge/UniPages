@@ -18,38 +18,9 @@
         </ul>
         <div class="tab-content">
           <div id="posts" class="tab-pane active">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <p> * </p>
-                <p> * </p>
-                <p> * </p>
-                <p> * </p>
-                <p> * </p>
-                <p> * </p>
-                <p> * </p>
-                <p> * </p>
-                <p> * </p>
-                <p> * </p>
-                <p> * </p>
-                <div class="col-sm-12">
-                  <div class="panel panel-default">
-                    <h4 class="panel-heading"><a href="#">Joe Bloggs</a> in <a href="#">WebScript</a> - 17/12/15</h4>
-                    <div class="panel-body">
-                      <p>Last lecture was fantastic!</p>
-                    </div>
-                    <div class="col-sm-1"></div>
-                      <div class="col-sm-11 panel panel-default">
-                        <h4 class="panel-heading"><a href="#">Jim Foo</a> - 18/12/15</h4>
-                        <div class="panel-body">
-                          <p>b-52!!</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
           </div>
-          <div id="collegues" class="tab-pane"></div>
+          <div id="collegues" class="tab-pane">
+          </div>
         </div>
       </div>
       <div class="col-sm-4">
