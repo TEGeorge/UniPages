@@ -3,7 +3,7 @@
   <body id="post">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h4><a id="post-author" href="#">Author</a> - <a id="post-group" href="#"> Tom George</a> - <a id="post-time" href="#">16:05</a> - <a id="post-date" href="#">12/12/93</a></h4>
+        <h4><a id="post-author" href="#">Author</a> - <a id="post-group" href="#">Target</a> - <a id="post-time">HH:MM</a> - <a id="post-date">DD/MM/YY</a></h4>
       </div>
       <div class="panel-body">
         <div class="panel panel-default">
@@ -15,10 +15,10 @@
         </div>
         <ul id="comments" style="list-style-type: none;">
           <li>
-            <?php include 'comment.php'; ?>
+            <?php include 'template/comment.php'; ?>
           </li>
           <li>
-            <?php include 'postinput.php'; ?>
+            <?php include 'template/input-post.php'; ?>
           </li>
         </ul>
       </div>
