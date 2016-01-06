@@ -4,6 +4,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <head>
+  <script src="lib/format.js"></script>
      <title>UniPages</title>
   </head>
 
@@ -27,10 +28,10 @@
                 <?php include 'template/input-post.php'; ?>
 
               </div>
-              <div id="posts-content" class="panel-body">
-                <ul id="posts" class="list-unstyled">
+              <div id="" class="panel-body">
+                <ul id="posts-content" class="list-unstyled">
 
-                  <li><?php include 'template/post.php'; ?></li>
+                  <?php include 'template/post.php'; ?>
 
                 </ul>
               </div>

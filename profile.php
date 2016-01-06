@@ -15,13 +15,13 @@
           <div class="panel panel-default">
             <div class="panel-heading">
 
-              <?php include 'postinput.php'; ?>
+              <?php include 'template/input-post.php'; ?>
 
             </div>
             <div id="posts-content" class="panel-body">
-              <ul id="posts" class="list-unstyled">
+              <ul id="posts-list" class="list-unstyled">
 
-                <li><?php include 'post.php'; ?></li>
+                <li><?php include 'template/post.php'; ?></li>
 
               </ul>
             </div>
@@ -73,7 +73,7 @@
           </div>
         </div>
       </div>
-
     </div>
   </body>
+  <!--<script src="lib/format.js">postformatter(posts-list)</script>-->
 </html>
