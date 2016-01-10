@@ -5,6 +5,7 @@
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <head>
   <script src="lib/format.js"></script>
+  <script src="lib/ajax.js"></script>
      <title>UniPages</title>
   </head>
 
