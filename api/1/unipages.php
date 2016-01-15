@@ -12,6 +12,11 @@
   + $ROUTES
   + $PREPAREDSTATEMENTS
 */
-
+  if($routes[0] == 'profile')
+  {
+    $results = $DB->query("SELECT * FROM `profile`;");
+    echo 'API routed success, ';
+    sendResults($results);
+  }
 
  ?>

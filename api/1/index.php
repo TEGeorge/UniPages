@@ -15,7 +15,7 @@
 
 	function sendResults($results)
 	{
-			echo("results: ");
+			echo json_encode($results);
 			var_dump($results);
 	}
 
