@@ -16,7 +16,6 @@
 	function sendResults($results)
 	{
 			echo json_encode($results);
-			var_dump($results);
 	}
 
 	$request = $_SERVER['REQUEST_METHOD'];

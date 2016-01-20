@@ -5,7 +5,8 @@
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <head>
   <script src="lib/format.js"></script>
-  <script src="lib/ajax.js"></script>
+  <script src="lib/home.js"></script>
+  <script src="lib/uniPages.js"></script>
      <title>UniPages</title>
   </head>
 
@@ -118,14 +119,14 @@
             <img src="profile.png" alt="" class="img-circle" style="width:100%; max-width:200px;">
             <dl id="profile-details">
 
-              <div class="profile-uni" style="padding: 5px;">
+              <div class="university" style="padding: 5px;">
                 <dt >University:</dt>
-                <dd><a href="#">University Of Portsmouth</a></dd>
+                <dd><a id="profile-university" href="#">UNI NAME</a></dd>
               </div>
 
-              <div class="profile-course" style="padding: 5px;">
+              <div class="course" style="padding: 5px;">
                 <dt >Course:</dt>
-                <dd><a href="#">(BSc) Computer Science (2015)</a></dd>
+                <dd><a id="profile-course" href="#">COURSE NAME</a></dd>
               </div>
 
               <div class="profile-unit" style="padding: 5px;">

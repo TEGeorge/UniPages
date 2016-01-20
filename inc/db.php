@@ -16,11 +16,11 @@ class DB
     try {
       $this->pdo = new PDO("mysql:host=$server", $user, $pw);
       $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      echo "Connected succesfully, ";
+      //echo "Connected succesfully, ";
 
       $this->pdo->exec("CREATE DATABASE IF NOT EXISTS uniPages");
       $this->pdo->exec("use uniPages;");
-      echo "Created DB, ";
+      //echo "Created DB, ";
 
       $dbinit = "CREATE TABLE IF NOT EXISTS profile (
         profileID INT NOT NULL AUTO_INCREMENT,
@@ -46,10 +46,10 @@ class DB
       );";
         $dbinit = trim($dbinit);
         $this->pdo->exec($dbinit);
-        echo "Tables Loaded, ";
+        //echo "Tables Loaded, ";
 
-        $nRows = $this->pdo->query('select * from profile')->rowCount();
-        echo $nRows . ", ";
+        $nRows = $this->pdo->query('select * from university')->rowCount();
+        //echo $nRows . ", ";
 
         if ($nRows==0)
         {
@@ -61,24 +61,27 @@ class DB
 
           $data = trim($data);
           $this->pdo->exec($data);
-          echo "Data Added, ";
+          //echo "Data Added, ";
         }
 
       }
       catch (PDOException $e) {
-        echo "DB Error: ";
+        //echo "DB Error: ";
         print $e->getMessage();
       }
     }
 
   function query ($statement) {
     try{
-      $results = $this->pdo->query($statement);
-      echo "FETCHED, ";
-      return $results->fetchAll(PDO::FETCH_ASSOC);
+      $sth = $this->pdo->prepare($statement);
+      $sth->execute();
+      //echo "FETCHED, ";
+      $result = array();
+      $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+      return $result;
     }
     catch (PDOException $e) {
-      echo "DB Error: ";
+      //echo "DB Error: ";
       print $e->getMessage();
     }
   }

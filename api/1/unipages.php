@@ -12,11 +12,17 @@
   + $ROUTES
   + $PREPAREDSTATEMENTS
 */
+  $_SESSION['id'] = 1;
   if($routes[0] == 'profile')
   {
-    $results = $DB->query("SELECT * FROM `profile`;");
-    echo 'API routed success, ';
-    sendResults($results);
+    $profile = $DB->query("SELECT * FROM profile WHERE profileID = ".$_SESSION['id']);
+    //echo 'API routed success, ';
+    sendResults($profile);
   }
 
- ?>
+  if($routes[0] =='university') {
+    $result = $DB->query("SELECT university FROM profile WHERE profileID = ".$_SESSION['id']);
+    $university = $DB->query("SELECT * FROM university WHERE uniID = ".$result[0]['university']);
+    sendResults($university);
+  }
+?>
