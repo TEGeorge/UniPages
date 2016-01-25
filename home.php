@@ -6,7 +6,6 @@
   <head>
   <script src="lib/format.js"></script>
   <script src="lib/home.js"></script>
-  <script src="lib/uniPages.js"></script>
      <title>UniPages</title>
   </head>
 

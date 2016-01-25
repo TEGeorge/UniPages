@@ -5,6 +5,12 @@
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <head>
      <title>UniPages</title>
+     <?php
+     session_start();
+     $_SESSION['login'] = 'TRUE';
+     $_SESSION['id'] = 1;
+     $_SESSION['uni'] = 1;
+     ?>
   </head>
 
   <body>

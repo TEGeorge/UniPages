@@ -3,7 +3,6 @@
 	Script recieves income API requests, breaks downt the request & rebuilds then sends response
 */
 
-
 	function getCurrentUri()
 	{
 		$basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)) . '/';
@@ -18,6 +17,7 @@
 			echo json_encode($results);
 	}
 
+	session_start();
 	$request = $_SERVER['REQUEST_METHOD'];
 	$base_url = getCurrentUri();
 	$tmproutes = array();
