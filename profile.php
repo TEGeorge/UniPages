@@ -39,7 +39,7 @@
             <img src="profile.png" alt="" class="img-circle" style="width:100%; max-width:200px;">
             <dl id="profile-details">
 
-              <div class="profile-uni" style="padding: 5px;">
+              <div class="profile-university" style="padding: 5px;">
                 <dt >University:</dt>
                 <dd><a href="#">University Of Portsmouth</a></dd>
               </div>

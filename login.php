@@ -11,6 +11,7 @@
      $_SESSION['id'] = 1;
      $_SESSION['uni'] = 1;
      ?>
+     <script>alert("Logged In")</script>
   </head>
 
   <body>

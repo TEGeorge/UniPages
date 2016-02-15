@@ -46,10 +46,8 @@
                 <?php include 'template/input-post.php'; ?>
 
               </div>
-              <div id="university-content" class="panel-body">
-                <ul id="posts" class="list-unstyled">
-
-                  <li><?php include 'template/post.php'; ?></li>
+              <div id="" class="panel-body">
+                <ul id="university-content" class="list-unstyled">
 
                 </ul>
               </div>
@@ -66,8 +64,6 @@
               <div id="course-content" class="panel-body">
                 <ul id="posts" class="list-unstyled">
 
-                  <li><?php include 'template/post.php'; ?></li>
-
                 </ul>
               </div>
             </div>
@@ -77,8 +73,6 @@
             <div class="panel panel-default">
               <div id="groups-content" class="panel-body">
                 <ul id="posts" class="list-unstyled">
-
-                  <li><?php include 'template/post.php'; ?></li>
 
                 </ul>
               </div>

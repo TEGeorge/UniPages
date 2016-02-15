@@ -43,14 +43,16 @@ class DB
       }
     }
 
-  function query ($statement) {
+  function query ($statement, $return) {
     try{
       $sth = $this->pdo->prepare($statement);
       $sth->execute();
       //echo "FETCHED, ";
-      $result = array();
-      $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-      return $result;
+      if($return) {
+        $result = array();
+        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+      }
     }
     catch (PDOException $e) {
       //echo "DB Error: ";
