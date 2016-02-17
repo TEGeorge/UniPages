@@ -10,6 +10,7 @@
      $_SESSION['login'] = 'TRUE';
      $_SESSION['id'] = 1;
      $_SESSION['uni'] = 1;
+     $_SESSION['course'] = 1;
      ?>
      <script>alert("Logged In")</script>
   </head>

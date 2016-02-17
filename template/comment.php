@@ -1,12 +1,13 @@
-<body id="comment">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h5><a id="comment-author" href="#">Author</a> - <a id="comment-time">HH:MM</a> - <a id="comment-date">DD/MM/YY</a></h4>
-    </div>
-    <div class="panel-body">
-      <p id="comment-content">
-        Hello World
-      </p>
-    </div>
-  </div>
-</body>
+<html>
+  <body>
+    <form <?php echo "onsubmit='createComment(content.value,".$author.",".$target.",\"".$targetType."\");return false;'";?> >
+      <div class="form-group">
+        <label for="input-post">Comment</label>
+        <textarea class="form-control" rows="3" id="input-post" style="resize:vertical" name="content"></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-default">Submit</button>
+      </div>
+    </form>
+  </body>
+</html>

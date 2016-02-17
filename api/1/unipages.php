@@ -21,7 +21,7 @@
       if (isset($routes[1])) {
         //*** /profile/posts ***//
         if($routes[1] == 'posts') {
-          $posts = $DB->query("SELECT * FROM post WHERE targetType = 'profile' AND authorID = ".$_SESSION['id']." OR targetID = ".$_SESSION['id'], True);
+          $posts = $DB->query("SELECT * FROM post WHERE targetType = 'profile' AND authorID = ".$_SESSION['id']." OR targetID = ".$_SESSION['id']." ORDER BY updated_time DESC", True);
           sendResults(loadPosts($posts));
         }
         //*** /profile/<id> ***//
@@ -30,7 +30,7 @@
           if(isset($routes[2])) {
             //*** /profile/<id>/posts ***//
             if($routes[2] == 'posts') {
-              $posts = $DB->query("SELECT * FROM post WHERE targetType = 'profile' AND authorID = ".$routes[1]." OR targetID = ".$routes[1], True);
+              $posts = $DB->query("SELECT * FROM post WHERE targetType = 'profile' AND authorID = ".$routes[1]." OR targetID = ".$routes[1]." ORDER BY updated_time DESC", True);
               sendResults(loadPosts($posts));
             }
           }
@@ -55,7 +55,7 @@
       {
         //*** /university/posts ***//
         if($routes[1] == 'posts') {
-          $posts = $DB->query("SELECT * FROM post WHERE targetType = 'university' AND targetID = ".$_SESSION['uni'], True);
+          $posts = $DB->query("SELECT * FROM post WHERE targetType = 'university' AND targetID = ".$_SESSION['uni']." ORDER BY updated_time DESC", True);
           sendResults(loadPosts($posts));
         }
         //*** /university/<id> ***//
@@ -72,6 +72,29 @@
     }
 
     //*** /.. ***//
+    if($routes[0] =='course') {
+      //*** /course/.. ***//
+      if (isset($routes[1]))
+      {
+        //*** /course/posts ***//
+        if($routes[1] == 'posts') {
+          $posts = $DB->query("SELECT * FROM post WHERE targetType = 'course' AND targetID = ".$_SESSION['course']." ORDER BY updated_time DESC", True);
+          sendResults(loadPosts($posts));
+        }
+        //*** /university/<id> ***//
+        elseif (is_numeric($routes[1])) {
+          $course = $DB->query("SELECT * FROM course WHERE courseID = ".$routes[1], True);
+          sendResults($course);
+        }
+      }
+      //*** /university *** //
+      else {
+        $course = $DB->query("SELECT * FROM course WHERE courseID = ".$_SESSION['course'], True);
+        sendResults($course);
+      }
+    }
+
+    //*** /.. ***//
     if($routes[0] =='group') {
       //*** /group/.. ***//
       if (isset($routes[1]))
@@ -80,7 +103,7 @@
         if (is_numeric($routes[1])) {
           //*** /group/<id>/posts ***//
           if (isset($routes[2]) && $routes[2] == 'posts') {
-            $posts = $DB->query("SELECT * FROM post WHERE targetType = 'group' AND targetID = ".$routes[1], True);
+            $posts = $DB->query("SELECT * FROM post WHERE targetType = 'group' AND targetID = ".$routes[1]." ORDER BY updated_time DESC", True);
             sendResults(loadPosts($posts));
           }
           //*** /group/<id> ***//
@@ -107,12 +130,21 @@
   if($request == 'POST') {
     $data = json_decode(file_get_contents('php://input'));
     if($routes[0] == 'post') {
-      $timestamp = date('d/m/Y h:i:s', time());
       $type = (string)$data->targetType;
       $content = (string)$data->content;
-      $sql = "INSERT INTO post (authorID, targetType, targetID, content)
-        VALUES ({$data->authorID}, '$type', {$data->targetID}, '$content');";
-        $DB->query($sql, False);
+      $sql = "INSERT INTO post (authorID, targetType, targetID, content, updated_time)
+        VALUES ({$_SESSION['id']}, '$type', {$data->targetID}, '$content', now());";
+      $DB->query($sql, False);
+    }
+    if($routes[0] == 'comment') {
+      $content = (string)$data->content;
+      $sql = "INSERT INTO comment (postID, authorID, content)
+        VALUES ({$data->postID}, {$_SESSION['id']}, '$content');";
+      $DB->query($sql, False);
+      $sql = "UPDATE post
+              SET updated_time=now()
+              WHERE postID = {$data->postID};";
+      $DB->query($sql, False);
     }
   }
 
@@ -142,6 +174,9 @@
         $target = $DB->query("SELECT name FROM `group` WHERE groupID = ".$post['targetID'], True);
         $target = $target[0]['name'];
         break;
+      case 'course':
+        $target = $DB->query("SELECT name FROM course WHERE courseID = ".$post['targetID'], True);
+        $target = $target[0]['name'];
     }
     $post['author'] = $author;
     $post['target'] = $target;

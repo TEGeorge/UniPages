@@ -11,7 +11,7 @@ const DBINIT = "CREATE TABLE IF NOT EXISTS university (
 
 CREATE TABLE IF NOT EXISTS course (
   courseID INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(100) NOT NULL,
+  name VARCHAR(400) NOT NULL,
   description VARCHAR(400) NOT NULL,
   links VARCHAR(200) NOT NULL,
   university INT NOT NULL,
@@ -49,11 +49,11 @@ CREATE TABLE IF NOT EXISTS profile_group (
 CREATE TABLE IF NOT EXISTS post(
   postID INT NOT NULL AUTO_INCREMENT,
   authorID INT NOT NULL,
-  targetType ENUM('profile', 'group', 'university') NOT NULL,
+  targetType ENUM('profile', 'group', 'course', 'university') NOT NULL,
   targetID INT NOT NULL,
   content VARCHAR (1000),
-  time_stamp TIMESTAMP,
-  updated_time TIMESTAMP,
+  created_time TIMESTAMP,
+  updated_time TIMESTAMP NOT NULL,
   PRIMARY KEY(postID)
 );
 
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS comment(
   postID INT NOT NULL,
   authorID INT NOT NULL,
   content VARCHAR (500),
-  time_stamp TIMESTAMP,
+  time_stamp TIMESTAMP NOT NULL,
   PRIMARY KEY (commentID),
   FOREIGN KEY (postID) REFERENCES post(postID),
   FOREIGN KEY (authorID) REFERENCES profile(profileID)
@@ -74,26 +74,26 @@ CREATE TABLE IF NOT EXISTS comment(
   INSERT INTO profile (university, first_name, surname, password)
   VALUES (1, 'Thomas', 'George', 'root');
 
-  INSERT INTO post (authorID, targetType, targetID, content)
-  VALUES (1, 'profile', 1, 'Hello Tom');
+  INSERT INTO post (authorID, targetType, targetID, content, updated_time)
+  VALUES (1, 'profile', 1, 'Hello Tom', now());
 
-  INSERT INTO post (authorID, targetType, targetID, content)
-  VALUES (1, 'university', 1, 'I love university');
+  INSERT INTO post (authorID, targetType, targetID, content, updated_time)
+  VALUES (1, 'university', 1, 'I love university', now());
 
-  INSERT INTO post (authorID, targetType, targetID, content)
-  VALUES (1, 'group', 1, 'This is a course');
+  INSERT INTO post (authorID, targetType, targetID, content, updated_time)
+  VALUES (1, 'course', 1, 'This is a course', now());
 
-  INSERT INTO post (authorID, targetType, targetID, content)
-  VALUES (1, 'group', 2, 'This is a group');
-
-  INSERT INTO `group` (name, description, links, university)
-  VALUES ('CU', 'Lets together', 'junk', 1, FALSE);
+  INSERT INTO post (authorID, targetType, targetID, content, updated_time)
+  VALUES (1, 'group', 2, 'This is a group', now());
 
   INSERT INTO `group` (name, description, links, university)
-  VALUES ('Archery Socitey', 'And be alright', 'junk', 1, FALSE);
+  VALUES ('CU', 'Lets together', 'junk', 1);
+
+  INSERT INTO `group` (name, description, links, university)
+  VALUES ('Archery Socitey', 'And be alright', 'junk', 1);
 
   INSERT INTO comment (postID, authorID, content)
-  VALUES (1, 1, 'Oh, Hello Other Tom')
+  VALUES (1, 1, 'Oh, Hello Other Tom');
 
   INSERT INTO course (name, description, links, university)
   VALUES ('Computer Science, Year 2 (2015)', 'For students studying comp sci yay!', 'junk', 1);

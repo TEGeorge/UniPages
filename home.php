@@ -26,7 +26,8 @@
             <div class="panel panel-default">
               <div class="panel-heading">
 
-                <?php include 'template/input-post.php'; ?>
+                  <?php $target=1; $targetType='profile';
+                  include 'template/input-post.php'; ?>
 
               </div>
               <div id="" class="panel-body">
@@ -43,7 +44,8 @@
             <div class="panel panel-default">
               <div class="panel-heading">
 
-                <?php include 'template/input-post.php'; ?>
+                <?php $target=$_SESSION['uni']; $targetType='university';
+                include 'template/input-post.php'; ?>
 
               </div>
               <div id="" class="panel-body">
@@ -58,7 +60,8 @@
             <div class="panel panel-default">
               <div class="panel-heading">
 
-                <?php include 'template/input-post.php'; ?>
+                <?php $target=$_SESSION['course']; $targetType='course';
+                include 'template/input-post.php'; ?>
 
               </div>
               <div id="course-content" class="panel-body">
