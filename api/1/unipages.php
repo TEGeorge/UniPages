@@ -18,7 +18,11 @@
   }
 
   else if($request == 'GET') {
-
+    if ($routes[0] == 'logout') {
+      session_destroy();
+      header('location: http://localhost:8080/login.php', true, 302);
+      exit;
+    }
     //*** /.. ***//
     if($routes[0] == 'profile') {
       //*** /profile/.. ***//

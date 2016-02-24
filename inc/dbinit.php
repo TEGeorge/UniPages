@@ -30,6 +30,13 @@ CREATE TABLE IF NOT EXISTS profile (
   FOREIGN KEY(university) REFERENCES university(uniID)
 );
 
+CREATE TABLE IF NOT EXISTS login (
+  profileID INT NOT NULL,
+  googleID VARCHAR(100) NOT NULL,
+  PRIMARY KEY(googleID),
+  FOREIGN KEY(profileID) REFERENCES profile (profileID)
+);
+
 CREATE TABLE IF NOT EXISTS `group` (
   groupID INT NOT NULL AUTO_INCREMENT,
   name VARCHAR(100) NOT NULL,
@@ -73,6 +80,9 @@ CREATE TABLE IF NOT EXISTS comment(
 
   INSERT INTO profile (university, first_name, surname, password)
   VALUES (1, 'Thomas', 'George', 'root');
+
+  INSERT INTO login (googleID, profileID)
+  VALUES ('117888963949520601927', 1);
 
   INSERT INTO post (authorID, targetType, targetID, content, updated_time)
   VALUES (1, 'profile', 1, 'Hello Tom', now());
