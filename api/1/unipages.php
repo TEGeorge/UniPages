@@ -13,7 +13,11 @@
   + $PREPAREDSTATEMENTS
 */
 
-  if($request == 'GET') {
+  if($routes[0] == 'oauth') {
+    include __DIR__.'/../../inc/login.php';
+  }
+
+  else if($request == 'GET') {
 
     //*** /.. ***//
     if($routes[0] == 'profile') {
@@ -127,7 +131,7 @@
     }
   }
 
-  if($request == 'POST') {
+  else if($request == 'POST') {
     $data = json_decode(file_get_contents('php://input'));
     if($routes[0] == 'post') {
       $type = (string)$data->targetType;

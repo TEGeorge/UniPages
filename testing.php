@@ -4,19 +4,47 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <head>
-    <script src="lib/classes.js"></script>
-    <title>UniPages</title>
+     <title>UniPages</title>
   </head>
 
   <body>
     <?php include 'header.php'; ?>
-    <div id="demo">
-    </div>
     <script>
-      request('GET', 'api/1/profile/posts', null, null, objPosts, insertPost);
-      function insertPost (result) {
-        document.getElementById('demo').innerHTML = result[0].render();
-      }
+    var redirect = function () {
+      request('GET', 'api/1/oauth/redirect', null, null, perform, null);
+    };
+
+    var perform = function (site) {
+      window.location.href = site;
+    }
     </script>
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Log In</h3>
+          </div>
+          <div class="panel-body">
+            <form onsumbit='redirect();return false;'>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-default">Submit</button>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-default">New User</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
