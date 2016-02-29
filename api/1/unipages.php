@@ -20,7 +20,6 @@
   else if($request == 'GET') {
     if ($routes[0] == 'logout') {
       session_destroy();
-      header('location: http://localhost:8080/login.php', true, 302);
       exit;
     }
     //*** /.. ***//
@@ -153,6 +152,20 @@
               SET updated_time=now()
               WHERE postID = {$data->postID};";
       $DB->query($sql, False);
+    }
+    if($routes[0] == 'profile') {
+      $first_name = (string)$data->first_name;
+      $surname = (string)$data->surname;
+      $email = (string)$data->email;
+      $sql = "INSERT INTO profile (first_name, surname, email)
+      VALUES ($first_name, $last_name, $email);
+
+      INSERT INTO login (profileID, googleID)
+      VALUES (LAST_INSERT_ID(), {$_SESSION['gid']});
+
+      SELECT profileID FROM profile WHERE profileID = LAST_INSERT_ID();"
+      $results = $DB->query($sql, True);
+      echo ($results[0]['profileID']);
     }
   }
 

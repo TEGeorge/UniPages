@@ -3,7 +3,7 @@
 
 const DBINIT = "CREATE TABLE IF NOT EXISTS university (
   uniID INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(100) NOT NULL,
+  uni_name VARCHAR(100) NOT NULL,
   description VARCHAR(400) NOT NULL,
   links VARCHAR(200),
   PRIMARY KEY(uniID)
@@ -11,7 +11,7 @@ const DBINIT = "CREATE TABLE IF NOT EXISTS university (
 
 CREATE TABLE IF NOT EXISTS course (
   courseID INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(400) NOT NULL,
+  course_name VARCHAR(400) NOT NULL,
   description VARCHAR(400) NOT NULL,
   links VARCHAR(200) NOT NULL,
   university INT NOT NULL,
@@ -23,9 +23,9 @@ CREATE TABLE IF NOT EXISTS profile (
   profileID INT NOT NULL AUTO_INCREMENT,
   first_name VARCHAR(20),
   surname  VARCHAR(40),
-  university INT NOT NULL,
+  email VARCHAR (100),
+  university INT,
   course INT,
-  password VARCHAR(20) NOT NULL,
   PRIMARY KEY(profileID),
   FOREIGN KEY(university) REFERENCES university(uniID)
 );
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS login (
 
 CREATE TABLE IF NOT EXISTS `group` (
   groupID INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(100) NOT NULL,
+  group_name VARCHAR(100) NOT NULL,
   description VARCHAR(400) NOT NULL,
   links VARCHAR(200) NOT NULL,
   university INT NOT NULL,
@@ -75,11 +75,11 @@ CREATE TABLE IF NOT EXISTS comment(
   FOREIGN KEY (authorID) REFERENCES profile(profileID)
 )";
 
-  const DUMMYDATA = "INSERT INTO university (name, description)
+  const DUMMYDATA = "INSERT INTO university (uni_name, description)
   VALUES ('University Of Portsmouth', 'Located in the center of the city of portsmouth');
 
-  INSERT INTO profile (university, first_name, surname, password)
-  VALUES (1, 'Thomas', 'George', 'root');
+  INSERT INTO profile (university, course, first_name, surname)
+  VALUES (1, 1, 'Thomas', 'George',);
 
   INSERT INTO login (googleID, profileID)
   VALUES ('117888963949520601927', 1);
@@ -96,16 +96,16 @@ CREATE TABLE IF NOT EXISTS comment(
   INSERT INTO post (authorID, targetType, targetID, content, updated_time)
   VALUES (1, 'group', 2, 'This is a group', now());
 
-  INSERT INTO `group` (name, description, links, university)
+  INSERT INTO `group` (group_name, description, links, university)
   VALUES ('CU', 'Lets together', 'junk', 1);
 
-  INSERT INTO `group` (name, description, links, university)
+  INSERT INTO `group` (group_name, description, links, university)
   VALUES ('Archery Socitey', 'And be alright', 'junk', 1);
 
   INSERT INTO comment (postID, authorID, content)
   VALUES (1, 1, 'Oh, Hello Other Tom');
 
-  INSERT INTO course (name, description, links, university)
+  INSERT INTO course (course_name, description, links, university)
   VALUES ('Computer Science, Year 2 (2015)', 'For students studying comp sci yay!', 'junk', 1);
   ";
 
