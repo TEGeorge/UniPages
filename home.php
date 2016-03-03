@@ -106,7 +106,7 @@
           <div class="panel-heading">
 
             <h2 id="profile-name">(STUDENT NAME) : (STUDENT NUMBER)</h2>
-
+            
           </div>
           <div class="panel-body">
             <img src="profile.png" alt="" class="img-circle" style="width:100%; max-width:200px;">

@@ -16,10 +16,14 @@
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="lib/uniPages.js"></script>
     <script src="lib/classes.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css" crossorigin="anonymous">
     <div class="jumbotron" style="padding:10px;">
       <h1 style="display:inline;"><a href="home.php">UniPages</a></h1>
       <button type="button" class="btn btn-default" style="float:right;" onclick="request('GET', 'api/1/logout');window.location.href='/login.php';">
         <span class="glyphicon glyphicon-log-out"></span>
+      </button>
+      <button type="button" class="btn btn-default" style="float:right;" onclick="window.location.href='/editUser.php';">
+        <span class="glyphicon glyphicon-edit"></span>
       </button>
     </div>
   </body>

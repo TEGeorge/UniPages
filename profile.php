@@ -4,7 +4,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <head>
-     <title>UniPages</title>
+    <title>UniPages</title>
   </head>
 
   <body>
@@ -41,32 +41,52 @@
 
               <div class="profile-university" style="padding: 5px;">
                 <dt >University:</dt>
-                <dd><a href="#">University Of Portsmouth</a></dd>
+                <dd>
+                  <a href="#">University Of Portsmouth</a>
+                </dd>
               </div>
 
               <div class="profile-course" style="padding: 5px;">
                 <dt >Course:</dt>
-                <dd><a href="#">(BSc) Computer Science (2015)</a></dd>
+                <dd>
+                  <a href="#">(BSc) Computer Science (2015)</a>
+                </dd>
               </div>
 
               <div class="profile-unit" style="padding: 5px;">
                 <dt>Units:</dt>
-                <dd><a href="#">UNIT 1</a></dd>
-                <dd><a href="#">UNIT 2</a></dd>
-                <dd><a href="#">UNIT 3</a></dd>
-                <dd><a href="#">UNIT 4</a></dd>
+                <dd>
+                  <a href="#">UNIT 1</a>
+                </dd>
+                <dd>
+                  <a href="#">UNIT 2</a>
+                </dd>
+                <dd>
+                  <a href="#">UNIT 3</a>
+                </dd>
+                <dd>
+                  <a href="#">UNIT 4</a>
+                </dd>
               </div>
 
               <div class="profile-social" style="padding: 5px;">
                 <dt>Social Media:</dt>
-                <dd><a href="#">SOCIAL MEDIA SITE 1</a></dd>
-                <dd><a href="#">SOCIAL MEDIA SITE 2</a></dd>
+                <dd>
+                  <a href="#">SOCIAL MEDIA SITE 1</a>
+                </dd>
+                <dd>
+                  <a href="#">SOCIAL MEDIA SITE 2</a>
+                </dd>
               </div>
 
               <div class="profile-groups" style="padding: 5px;">
                 <dt>Groups:</dt>
-                <dd><a href="#">GROUP 1</a></dd>
-                <dd><a href="#">GROUP 2</a></dd>
+                <dd>
+                  <a href="#">GROUP 1</a>
+                </dd>
+                <dd>
+                  <a href="#">GROUP 2</a>
+                </dd>
               </div>
 
             </dl>

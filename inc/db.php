@@ -56,8 +56,12 @@ class DB
     }
     catch (PDOException $e) {
       //echo "DB Error: ";
-      print $e->getMessage();
+      echo $e->getMessage();
     }
+  }
+
+  function lastId() {
+    return $this->pdo->lastInsertId();
   }
 }
 

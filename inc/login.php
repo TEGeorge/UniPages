@@ -58,21 +58,13 @@
   }
 
   function newUser ($details) {
-    $_SESSION['gid'] = $details[0]['sub'];
-    header('Location: http://localhost:8080/newuser.php?email='.$details['email'].'&name='.$details['name']);
+    $_SESSION['gid'] = $details['sub'];
+    echo ($details['sub']);
+    header('Location: http://localhost:8080/newuser.php');
     exit;
   }
 
-  function login ($gid) {
-    global $DB;
-    $user = $DB->query("SELECT * FROM login INNER JOIN profile ON profile.profileID=login.profileID WHERE googleID = ".$gid, True);
-    $_SESSION['login'] = True;
-    $_SESSION['id'] = $user[0]['profileID'];
-    $_SESSION['uni'] = $user[0]['university'];
-    $_SESSION['course'] = $user[0]['course'];
-    header('Location: http://localhost:8080/home.php');
-    exit;
-  }
+
 
 
 

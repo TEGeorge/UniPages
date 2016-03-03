@@ -4,19 +4,19 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <head>
-     <title>UniPages</title>
+    <title>UniPages</title>
   </head>
 
   <body>
     <?php include 'header.php'; ?>
     <script>
-    var redirect = function () {
-      request('GET', 'api/1/oauth/redirect', null, null, perform, null);
-    };
+      var redirect = function () {
+        request('GET', 'api/1/oauth/redirect', null, null, perform, null);
+      };
 
-    var perform = function (site) {
-      window.location.href = site;
-    }
+      var perform = function (site) {
+        window.location.href = site;
+      }
     </script>
     <div class="row">
       <div class="col-sm-4 col-sm-offset-4">

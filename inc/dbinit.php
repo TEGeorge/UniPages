@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS profile (
   profileID INT NOT NULL AUTO_INCREMENT,
   first_name VARCHAR(20),
   surname  VARCHAR(40),
-  email VARCHAR (100),
+  email VARCHAR (400),
   university INT,
   course INT,
   PRIMARY KEY(profileID),
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS comment(
   VALUES ('University Of Portsmouth', 'Located in the center of the city of portsmouth');
 
   INSERT INTO profile (university, course, first_name, surname)
-  VALUES (1, 1, 'Thomas', 'George',);
+  VALUES (1, 1, 'Thomas', 'George');
 
   INSERT INTO login (googleID, profileID)
   VALUES ('117888963949520601927', 1);
