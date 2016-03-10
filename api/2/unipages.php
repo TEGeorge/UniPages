@@ -13,17 +13,143 @@
   + $PREPAREDSTATEMENTS
 */
 
+
+
+switch ($route[0]) {
+  case 'login': //Changed from oAuth
+    switch ($request) {
+      case 'GET':
+        switch($route[1]) {
+          case '':
+          break;
+          case 'logout'
+          break;
+          case 'test': //INCLUDED FOR TEST PURPOSES
+          break;
+        }
+      break;
+      case 'POST':
+        switch($route[1]) {
+          case 'response':
+          break;
+        }
+      break;
+  break;
+  case 'profile':
+    switch ($request) {
+      case 'GET':
+        switch ($route[1])
+          case 'posts':
+            //Get All Posts
+          break;
+          case 'id':
+            //Get all profile details of specfied user
+          break;
+          case '':
+          $result = $DB->query('SELECT * FROM profile
+             LEFT JOIN university ON profile.uniID=university.uniID
+             LEFT JOIN course ON profile.course=course.courseID
+             WHERE profileID = '.$_SESSION['ID'], true);
+          send($result, 'json');
+          break;
+        }
+      break;
+      case 'POST':
+      break;
+    }
+  break;
+  case 'university':
+    switch ($request) {
+      case 'GET':
+        switch($route[1]) {
+          case 'id':
+          break;
+          case 'posts'
+          break;
+          case ''
+          break;
+        }
+      break;
+      case 'POST':
+      break;
+    }
+  break;
+  case 'group':
+    switch ($request) {
+      case 'GET':
+        switch($route[1]) {
+        case 'id':
+          switch ($route[2]) {
+            case 'posts':
+            break;
+            case ''
+            break;
+          }
+        break;
+        case 'posts':
+        break;
+        case '':
+        break;
+        }
+      break;
+      case 'POST':
+      break;
+    }
+  break
+  case 'course':
+    switch ($request) {
+      case 'GET':
+        switch($route[1]) {
+        case 'id':
+        break;
+        case 'posts':
+        break;
+        case '':
+        break;
+        }
+      break;
+      case 'POST':
+      break;
+    }
+  break;
+  case 'post':
+    switch ($request) {
+      case 'POST':
+      break;
+    }
+  break;
+  case 'comment':
+    switch ($request) {
+      case 'POST':
+
+        }
+      break;
+  break;
+  case 'search':
+    if ($request=='GET') {
+      switch($route[1]) {
+        case: 'profile':
+        break;
+        case: 'groups':
+        break;
+        case: 'course':
+        break;
+        case 'university':
+        break;
+      }
+    }
+  break;
+}
+
   if ($routes[0] == 'oauth') {
       include __DIR__.'/../../inc/login.php';
-  }
-
-  elseif ($request == 'GET') {
+  } elseif ($request == 'GET') {
       if ($routes[0] == 'logout') {
           session_destroy();
           exit;
       }
     //*** /.. ***//
-    else if ($routes[0] == 'profile') {
+    if ($routes[0] == 'profile') {
         //*** /profile/.. ***//
       if (isset($routes[1])) {
           //*** /profile/posts ***//
@@ -129,16 +255,6 @@
         //SEND LIST
       }
     }
-
-    if ($routes[0] == 'search') {
-      if(isset($routes[1])) {
-        if($routes[1]=='profile'){}        }
-        else if ($routes[1]=='groups') {}
-        else if ($routes[1]=='course') {}
-        else if ($routes[1]=='university') {}
-        }
-      }
-    }
   }
   elseif ($request == 'POST') {
       $data = json_decode(file_get_contents('php://input'));
@@ -162,13 +278,9 @@
       if ($routes[0] == 'profile') {
         if (isset($routes[1])) {
           if ($routes[1]== 'picture') {
-            sendResults($_FILES);
-            define ('SITE_ROOT', __DIR__.'/../../');
-            $file_ext   = explode('.', $_FILES['profile_picture']['name']);
-            $file_ext   = strtolower(end($file_ext));
-            $result = move_uploaded_file($_FILES['profile_picture']['tmp_name'], SITE_ROOT."/image/".$_SESSION['id'].".".$file_ext);
+            $result = move_uploaded_file($_FILES['profile_picture']['tmp_name'], "../image/profile pics/".$_SESSION['id']);
             if(!$result) {
-
+              echo "Error Uploading File";
               exit;
             }
           }

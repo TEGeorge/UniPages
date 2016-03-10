@@ -16,7 +16,7 @@
               <h2 id="profile-name">User Details</h2>
             </div>
             <div class="panel-body">
-              <form action="home.php" onsubmit="newUser(first_name.value, surname.value, email.value, profile_picture.value);return false;">
+              <form action="home.php" onsubmit="newUser(first_name.value, surname.value, email.value);return false;">
                 <div class="form-group">
                   <label for="first_name">First Name</label>
                   <input type="text" class="form-control" id="first_name" placeholder="Jane">
