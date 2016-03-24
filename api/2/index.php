@@ -3,55 +3,66 @@
     Script recieves income API requests, breaks downt the request & rebuilds then sends response
 */
 
-    function getCurrentUri()
-    {
-        $basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)).'/';
-        $uri = substr($_SERVER['REQUEST_URI'], strlen($basepath));
-        if (strstr($uri, '?')) {
-            $uri = substr($uri, 0, strpos($uri, '?'));
-        }
-        $uri = '/'.trim($uri, '/');
+session_start();
+$request = $_SERVER['REQUEST_METHOD'];
+$data = null;//MIGHT NOT NEED TO GO IN IF POST?
+if ($request=='POST') {$data = json_decode(file_get_contents('php://input'));}
 
-        return $uri;
+//BUILD ROUTE
+$basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)).'/';
+$uri = substr($_SERVER['REQUEST_URI'], strlen($basepath));
+if (strstr($uri, '?')) {
+    $uri = substr($uri, 0, strpos($uri, '?'));
+}
+$uri = '/'.trim($uri, '/');
+$tmproutes = array();
+$route = array();
+$tmproutes = explode('/', $uri);
+foreach ($tmproutes as $uri) {
+    if (trim($uri) != '') {
+        array_push($route, $uri);
     }
+}
+if (!isset($route[0])) { array_push($route, ''); }
+if (!isset($route[1])) { array_push($route, ''); }
+if (!isset($route[2])) { array_push($route, ''); }
 
-    function send($results, $json)
-    {
-      if ($json=='json') {
-          $results = json_encode($results);
-      }
-        echo $results;
-    }
+if (is_numeric($route[1])) {
+  $id = "'".$route[1]."'";
+  $route[1] = 'id';
+}
+else if (is_numeric($route[2])) {
+  $id = $route[2];
+  $route[2] = 'id';
+}
+else { $id = 0; }
 
-    session_start();
-    $request = $_SERVER['REQUEST_METHOD'];
-    $base_url = getCurrentUri();
-    $tmproutes = array();
-    $route = array();
-    //MIGHT NOT NEED TO GO IN IF POST?
-    $data = null;
-    if ($request=='POST') {$data = json_decode(file_get_contents('php://input'));}
-    $tmproutes = explode('/', $base_url);
-    foreach ($tmproutes as $uri) {
-        if (trim($uri) != '') {
-            array_push($route, $uri);
-        }
-    }
-    if (!isset($route[0])) { array_push($route, ''); }
-    if (!isset($route[1])) { array_push($route, ''); }
-    if (!isset($route[2])) { array_push($route, ''); }
+include __DIR__.'/router.php';
 
-    $id = 0
-    if (is_numeric($route[1]) {
-      $id = $route[1]
-      $route[1] = 'id'
-    }
-    else if (is_numeric($route[2]) {
-      $id = $route[2]
-      $route[2] = 'id'
-    }
+function send($meta, $payload=null ) {
 
-    /*
-    Now, $routes will contain all the routes. $routes[0] will correspond to first route. For e.g. in above example $routes[0] is search, $routes[1] is book and $routes[2] is fitzgerald
-    */
-    include __DIR__.'/unipages.php';
+  $format = 'json';
+
+  if (isset($meta['success']) && $meta['success'] == false) {
+    if (!isset($meta['status'])) { $meta['status'] = 500; }
+    if (!isset($meta['msg'])) { $meta['msg'] = "Don't Panic"; }
+  } else {
+    if (!isset($meta['msg'])) { $meta['msg'] = "Success"; }
+  }
+
+  $result['payload'] = $payload;
+  $result['meta'] = $meta;
+
+  header("HTTP/1.1 {$meta['status']} {$meta['msg']}");
+
+  switch($format) {
+    case 'text':
+    break;
+    case 'json':
+      echo json_encode($result);
+    break;
+    case 'xml':
+    break;
+  }
+}
+?>

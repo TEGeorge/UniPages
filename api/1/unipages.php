@@ -1,8 +1,8 @@
 <?php
 
-  include __DIR__.'/../../inc/db.php';
+include __DIR__.'/../../inc/ALL.php';
 
-  $DB = new DB();
+$DB = new DB();
 
 /*
   create Database object

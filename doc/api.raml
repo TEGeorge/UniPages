@@ -1,0 +1,200 @@
+title: UniPages
+version: 2.0
+baseUri: https://localhost:8080/api/2/
+mediaType: application/json
+types:
+
+traits:
+
+/user:
+  description: |
+    Current authorised user information
+  get:
+    description: |
+      Retrieve user information
+  post:
+    description: |
+      Create new user
+  put:
+    description: |
+      Update user information
+  delete:
+    description: |
+      Delete user
+  /posts:
+    description: |
+      Collection of users interacted posts
+    get:
+      description: Retrieve posts
+  /notifications:
+    description: |
+      Collection of the users notifications
+    get:
+      description: |
+        Retrieve notifcations
+    delete:
+      description: |
+        Deletes notifactions
+
+/profiles:
+  description: |
+    Collection of profiles
+  get:
+    description: |
+      Retrieve profiles
+  /{profile.id}:
+    description: |
+      Specfic profile
+    get:
+      description: |
+        Retrieve specfcied profiles information
+    /posts:
+      description: |
+        Collection of specfied profiles posts
+      get:
+        description: |
+          Retrieve specfied profiles posts
+      post:
+        description: |
+          Create RESOURCE post
+
+/universities:
+  description: |
+    Collection of universities
+  get:
+    description: |
+      Retrieve universities
+  /{universities.id}:
+    description: |
+      Specfic university
+    get:
+      description: |
+        Retrieve specified university
+    put:
+      description: |
+        Update specified university
+    /posts:
+      description: |
+        Collection of university posts
+      get:
+        description: |
+          Retrieve university posts
+      post:
+        description: |
+          Create RESOURCE post
+
+/courses:
+  description: |
+    Collection of courses
+  get:
+    description: |
+      Retrieve collection of courses
+  post:
+    description: |
+      Create new course
+  put:
+    description: |
+      Retrieve university posts
+  /{course.id}:
+    description: |
+      Specfic course
+    get:
+      description: |
+        Retrieve specfied course
+    put:
+      description: |
+        Update specfied course
+    /posts:
+      description: |
+        Collection of course posts
+      get:
+        description: |
+          Retrieve course posts
+      post:
+        description: |
+          Create RESOURCE post
+
+/groups:
+  description: |
+    Collection of groups
+  get:
+    description: |
+      Retrieve groups
+  post:
+    description: |
+      Create groups
+  /{groups.id}:
+    description: |
+      Specfic group
+    get:
+      description: |
+        Retrieve specfied group
+    put:
+      description: |
+        Update group
+    delete:
+      description: |
+        Delete groups
+    /posts:
+      description: |
+        Collection of group posts
+      get:
+        description: |
+          Retrieve group posts
+      post:
+        description: |
+          Create RESOURCE post
+
+/posts:
+  description: |
+    Collection of posts
+  get:
+    description: |
+      Retrieve posts
+  /{posts.id}:
+    description: |
+      Specfic post
+    get:
+      description: |
+        Retieve specfied post
+    post:
+      description: |
+        Create Post
+    put:
+      description: |
+        Update group
+    delete:
+      description: |
+        Delete groups
+    /comments:
+      description: |
+        Collection of comments in the specfied post
+      get:
+        description:
+          Retrieve comments
+      /{comments.id}:
+        description: |
+          Specfic comment
+        get:
+          description: |
+            Retieve comment
+        post:
+          description: |
+            Create commet
+        put:
+          description: |
+            Update comment
+        delete:
+          description: |
+            Delete comment
+
+/oauth:
+  description: |
+    Authorisation and log in using google account
+  get:
+    description: |
+      Redirect to google login
+  /authorise:
+    get:
+      description: |
+        Authorise response from google login
