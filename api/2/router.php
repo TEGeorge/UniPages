@@ -7,6 +7,10 @@ $meta['success'] = true;
 $meta['request'] = $request;
 $meta['path'] = $route;
 
+//LOGIN FIRST
+
+//UPDATE USER PROFILE
+
 switch ($route[0]) {
   case 'login': //Changed from oAuth
     switch ($request) {

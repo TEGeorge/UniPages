@@ -1,0 +1,156 @@
+html, body {
+    margin:0;
+    padding:0;
+}
+h1, p {
+    margin:0;
+}
+
+h3 {
+  margin-bottom: 5px;
+  color: #2196f3;
+}
+
+header, #main, #info{
+  box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.2);
+  position: relative;
+}
+
+header a {
+  color: white;
+}
+
+.content {
+  z-index: 2;
+  padding: 5px;
+}
+
+header {
+  background: #90caf9;
+  margin: 0;
+  z-index: 1;
+}
+
+.timestamp {
+  font-size: 12;
+  color: grey;
+}
+
+.post-content, .comment-content {
+  padding-left: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: #2196f3;
+}
+
+#main {
+  float: left;
+  margin: 0;
+  width: 66%;
+  background: #eeeeee;
+  height: 100%;
+  min-height:100vh;
+  z-index: 0;
+}
+
+.infopanel {
+  margin: 20px;
+  background: #fafafa;
+  box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.4);
+  position: relative;
+}
+
+#info {
+  float: left;
+  margin: 0;
+  width: 34%;
+  min-height: 100%;
+  background: #eeeeee;
+  min-height:100vh;
+  z-index: 0;
+}
+
+.filler {
+  margin-top: 40px;
+}
+
+.contentBox{
+  margin: 0 auto;
+  width: 90%;
+}
+
+.offset, .comments li {
+  margin: 0 auto;
+  width: 95%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+input {
+  display: none;
+  margin: 0;
+}
+.tabbar {
+  display: inline-block;
+  width: 19%;
+  cursor: pointer;
+  text-align: center;
+  z-index: 2;
+  box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.2);
+  margin-bottom: 30px;
+}
+
+.panel {
+  box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.4);
+  position: relative;
+  background: #fafafa;
+  margin-top: 5px;
+}
+
+ul, li {
+  list-style: none;
+  padding: 0;
+}
+
+
+
+
+
+#main section {
+  display: none;
+}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2,
+#tab3:checked ~ #content3,
+#tab4:checked ~ #content4,
+#tab5:checked ~ #content5 {
+  display: block;
+}
+
+[id^="tab"]:checked + label {
+  box-shadow: inset 0 3px #2196f3;
+}
+
+
+@keyframes fadeInScale {
+
+  0% {
+  	transform: scale(0.9);
+  	opacity: 0;
+  }
+
+  100% {
+  	transform: scale(1);
+  	opacity: 1;
+  }
+}
+
+.tab-content p,
+.tab-content h3 {
+  -webkit-animation: fadeInScale 0.7s ease-in-out;
+  -moz-animation: fadeInScale 0.7s ease-in-out;
+  animation: fadeInScale 0.7s ease-in-out;
+}
