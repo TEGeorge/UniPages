@@ -24,7 +24,7 @@ class DB
         $this->pdo->exec(DBINIT); //CREATE TABLES
         //INSERT DUMMY DATA IF NO DATA
         $nRows = $this->pdo->query('SELECT *
-          FROM university
+          FROM University
           LIMIT 1')->rowCount();
 
         if ($nRows==0)
@@ -65,9 +65,24 @@ class DB
     $this->pdo = null;
   }
 
-  public function lastId() {
-    return $this->pdo->lastInsertId();
+  public function insertQuery($statement, $bind = null) {
+    try{
+      $sth = $this->pdo->prepare($statement);
+      $sth->execute($bind);
+      return $this->pdo->lastInsertId();
+    }
+    catch (PDOException $e) {
+      $meta['success'] = false;
+      $meta['msg'] = $e->getMessage();
+      $meta['status'] = 400;
+      $meta['query'] = $statement;
+      $meta['bindings'] = $bindings;
+      $meta['debug'] = 'Invalid POST data';
+      send ($meta);
+      exit;
+    }
   }
-}
+
+  }
 
 ?>

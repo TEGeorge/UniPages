@@ -26,16 +26,20 @@ foreach ($tmproutes as $uri) {
 if (!isset($route[0])) { array_push($route, ''); }
 if (!isset($route[1])) { array_push($route, ''); }
 if (!isset($route[2])) { array_push($route, ''); }
+if (!isset($route[3])) { array_push($route, ''); }
 
 if (is_numeric($route[1])) {
   $id = "'".$route[1]."'";
   $route[1] = 'id';
 }
-else if (is_numeric($route[2])) {
+if (is_numeric($route[2])) {
   $id = $route[2];
   $route[2] = 'id';
 }
-else { $id = 0; }
+if (is_numeric($route[3])) {
+  $id = $route[3];
+  $route[3] = 'id';
+}
 
 include __DIR__.'/router.php';
 

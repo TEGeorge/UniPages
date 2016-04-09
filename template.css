@@ -1,17 +1,24 @@
 html, body {
     margin:0;
     padding:0;
+    height: 100%;
+    background: #eeeeee;
 }
-h1, p {
+h1 {
     margin:0;
 }
+
+hr {
+  margin: 0;
+}
+
 
 h3 {
   margin-bottom: 5px;
   color: #2196f3;
 }
 
-header, #main, #info{
+header{
   box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.2);
   position: relative;
 }
@@ -48,11 +55,33 @@ a {
 #main {
   float: left;
   margin: 0;
-  width: 66%;
-  background: #eeeeee;
+  width: 70%;
   height: 100%;
   min-height:100vh;
-  z-index: 0;
+}
+
+#links {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+table {
+  margin-left:auto;
+  margin-right:auto;
+  border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+
+table, th, td {
+    border: 2px solid black;
+}
+
+form {
+  padding-bottom: 15px;
 }
 
 .infopanel {
@@ -62,18 +91,32 @@ a {
   position: relative;
 }
 
+#profile-picture {
+    width: 75%;
+    border-radius: 50%;
+}
+
 #info {
   float: left;
   margin: 0;
-  width: 34%;
+  width:30%;
   min-height: 100%;
-  background: #eeeeee;
   min-height:100vh;
-  z-index: 0;
 }
 
 .filler {
   margin-top: 40px;
+}
+
+.info-container {
+  text-align:center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.info-container a {
+  padding: 25px;
+  dislay: block;
 }
 
 .contentBox{
@@ -84,11 +127,33 @@ a {
 .offset, .comments li {
   margin: 0 auto;
   width: 95%;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 3px;
 }
 
-input {
+.square {
+    float:left;
+    position: relative;
+    width: 15%;
+    max-height: 2px;
+    padding-bottom : 15%; /* = width for a 1:1 aspect ratio */
+    margin:1.66%;
+    border: solid;
+    background-position:center center;
+    background-repeat:no-repeat;
+    background-size:cover; /* you change this to "contain" if you don't want the images to be cropped */
+}
+
+.square:hover {
+  cursor: pointer;
+  background: #eeeeee;
+}
+
+#bottom {
+  clear:both;
+  
+}
+
+.tabs {
   display: none;
   margin: 0;
 }
@@ -100,6 +165,11 @@ input {
   z-index: 2;
   box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.2);
   margin-bottom: 30px;
+  background: #fafafa;
+}
+
+.tab-label {
+  margin-top: 5px;
 }
 
 .panel {

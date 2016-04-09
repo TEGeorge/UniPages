@@ -3,6 +3,9 @@
 
 <head>
   <link rel="stylesheet" type="text/css" href="template.css">
+  <script src="lib/general/main.js"></script>
+  <script src="lib/general/classes.js"></script>
+  <script src="lib/bin/home.js"></script>
   <meta charset="UTF-8">
   <title>UniPages</title>
 </head>
@@ -166,25 +169,27 @@
         <ul class="content">
           <li class="panel">
             <div class="offset">
+              <h3>File Upload</h3>
+              <form action="">
+                <input type="file">
+                <button type="submit" class="btn btn-default">Submit</button>
+              </form>
+            </div>
+          </li>
+          <li class="panel">
+            <div class="offset">
               <h3>File Repository</h3>
               <div class="square 1-1">
+                <h3>Folder</h3>
               </div>
               <div class="square folder">
-                <h1>Hello World My Name is tom</h1>
-              </div>
-              <div class="square img_1-3">
-                <h1>Hello World My Name is tom</h1>
-              </div>
-              <div class="square img_1-3">
-                <h1>Hello World My Name is tom</h1>
+                <h3>.IMG</h3>
               </div>
               <div class="square img_1-3">
                 <h1>Hello World My Name is tom</h1>
               </div>
               <div id="bottom">
-                <h3>The End</h3>
               </div>
-
             </div>
           </li>
         </ul>
@@ -194,11 +199,11 @@
   <section id="info">
     <div class="infopanel">
       <div class="info-container">
-        <h2>Thomas George</h2>
+        <h2 id="name">(PLACEHOLDER)</h2>
         <img src="http://placekitten.com/200/200" alt="profile picture" id="profile-picture">
-        <h4><strong>University:</strong> <a>(PLACEHOLDER) </a> <br> </h4>
-        <h4><strong>Course:</strong> <a>(PLACEHOLDER) </a> <br> </h4>
-        <h4><strong>Bio:</strong> <a>(PLACEHOLDER) </a> <br> </h4>
+        <h4><strong>University: <br></strong> <a id="university">(PLACEHOLDER) </a> <br> </h4>
+        <h4><strong>Course: <br></strong> <a id="course">(PLACEHOLDER) </a> <br> </h4>
+        <h4><strong>Bio: <br></strong> <a id="bio">(PLACEHOLDER) </a> <br> </h4>
       </div>
 
     </div>
