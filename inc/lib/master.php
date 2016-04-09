@@ -41,8 +41,6 @@
     $profile['eid'] = $result['eid'];
     $profile['fname'] = $result['fname'];
     $profile['surname'] = $result['surname'];
-    $profile['university'] = $result['university'];
-    $profile['course']= $result['course'];
     $profile['privacy'] = $result['privacy'];
     return $profile;
   }
@@ -50,7 +48,7 @@
   //NOT FINISHED
   function getProfiles () {
     $DB = new DB;
-    $bind = array($_SESSION['user']['university']['id']);
+    $bind = array((int)$_SESSION['user']['university']['id']);
     $sql = 'SELECT id FROM Profile WHERE university = ?'; //BINDING IS NOT WORKING
     $result = $DB -> query($sql, $bind);
     $profiles = array();
@@ -165,12 +163,37 @@
     return $result[0]['id'];
   }
 
+  function getPost($id) {
+    $DB = new DB;
+    $bind = array($id);
+    $sql = 'SELECT * FROM Post WHERE id = ?';
+    $result = $DB -> query($sql, $bind);
+    if (is_null($result[0])) {
+      return null;
+    }
+    return getPostInfo($result[0]);
+  }
+
+  function getComment($id) {
+    $DB = new DB;
+    $bind = array($id);
+    $sql = 'SELECT * FROM Comment WHERE id = ?';
+    $result = $DB -> query($sql, $bind);
+    if (is_null($result)) {
+      return null;
+    }
+    return $result[0];
+  }
+
   function getTargetPosts($id, $type, $offset = 0, $limit = 20) {
     $entity = getEntityId($id, $type);
     $DB = new DB;
     $bind = array($entity);
     $sql = 'SELECT * FROM Post WHERE target = ? ORDER BY updated DESC'; //LIMIT ? ? MISSING
     $result = $DB -> query($sql, $bind);
+    if (is_null($result)) {
+      return null;
+    }
     foreach ($result as $post) {
       $post = getPostInfo($post);  //DO CHANGES TO POST CHANGE RESULT ARRAY??????
       $post['comments'] = getComments($post['id']);
@@ -183,30 +206,32 @@
     $bind = array($id);
     $sql = 'SELECT * FROM Post WHERE author = ? ORDER BY updated DESC';
     $result = $DB -> query($sql, $bind);
+    $posts = array();
     foreach ($result as $post) {
       $post = getPostInfo($post);  //DO CHANGES TO POST CHANGE RESULT ARRAY??????
       $post['comments'] = getComments($post['id']);
+      array_push($posts, $post);
     }
-    return $result;
+    return $posts;
   }
 
   function getPostInfo($post) {
     $entity = getEntity($post['target']);
     switch($entity['type']) {
       case 'group':
-        $post['target'] = getGroup($entity['id']);
+        $post['target'] = getGroup($entity['entity']);
       break;
       case 'profile':
-        $post['target'] = getProfile($entity['id']);
+        $post['target'] = getSurfaceProfile($entity['entity']);
       break;
       case 'course':
-        $post['target'] = getCourse($entity['id']);
+        $post['target'] = getCourse($entity['entity']);
       break;
       case 'university':
-        $post['target'] = getUniversity($entity['id']);
+        $post['target'] = getUniversity($entity['entity']);
       break;
     }
-    $post['author'] = getProfile($post['author']);
+    $post['author'] = getSurfaceProfile($post['author']);
     return $post;
   }
 
@@ -215,25 +240,42 @@
     $bind = array($id);
     $sql = 'SELECT * FROM Comment WHERE post = ? ORDER BY created DESC';
     $result = $DB -> query($sql, $bind);
-    foreach ($result as $comment) {
-      $comment['author'] = getProfile($comment['author']);
+    if (is_null($result)) {
+      return $result;
     }
-    return $result;
+    $comments = array();
+    foreach ($result as $comment) {
+      $comment['author'] = getSurfaceProfile($comment['author']);
+      array_push($comments, $comment);
+    }
+    return $comments;
   }
 
   function newPost($data) {
     $DB = new DB;
     if(!isset($data['isquestion'])) {$data['isquestion'] = 0;}
-    $bind = array ($data['author'], $data['target'], $data['isquestion'], $data['content']);
+    $bind = array ($_SESSION['user']['id'], $data['target'], $data['isquestion'], $data['content']);
     $sql = 'INSERT INTO Post (author, target, updated, isquestion, content) VALUES (?, ?, CURRENT_TIMESTAMP, ?, ?)';
     $id = $DB -> insertQuery($sql, $bind);
+    return getPost($id);
   }
 
-  function newComment($data) {
+  function newComment($post, $data) {
     $DB = new DB; //VALID POST?
-    $bind = array ($data['post'], $data['author'], $data['content']);
+    $bind = array ($post, $_SESSION['user']['id'], $data['content']);
     $sql = 'INSERT INTO Comment (post, author, content) VALUES (?, ?, ?)';
     $id = $DB -> insertQuery($sql, $bind);
+    updatePost($post);
+    return getComment($id);
+  }
+
+  function updatePost($id) {
+    $DB = new DB;
+    $bind = array($id);
+    $sql = 'UPDATE Post
+              SET updated=NOW()
+              WHERE id=?;';
+    $result = $DB -> insertQuery($sql, $bind);
   }
 
   function newProfile($data) {

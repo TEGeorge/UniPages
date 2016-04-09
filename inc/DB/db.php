@@ -18,6 +18,7 @@ class DB
     try {
         $this->pdo = new PDO("mysql:host=$server", $user, $pw);
         $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, FALSE);
         $this->pdo->exec("CREATE DATABASE IF NOT EXISTS uniPages");
         $this->pdo->exec("use uniPages;");
 
@@ -45,6 +46,7 @@ class DB
 
   public function query ($statement, $bind = null) {
     try{
+
       $sth = $this->pdo->prepare($statement);
       $sth->execute($bind);
       return $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -55,7 +57,7 @@ class DB
       $meta['msg'] = $e->getMessage();
       $meta['status'] = 400;
       $meta['query'] = $statement;
-      $meta['bindings'] = $bindings;
+      $meta['bindings'] = $bind;
       send ($meta);
       exit;
     }
@@ -76,7 +78,7 @@ class DB
       $meta['msg'] = $e->getMessage();
       $meta['status'] = 400;
       $meta['query'] = $statement;
-      $meta['bindings'] = $bindings;
+      $meta['bindings'] = $bind;
       $meta['debug'] = 'Invalid POST data';
       send ($meta);
       exit;

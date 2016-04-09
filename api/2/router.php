@@ -66,7 +66,7 @@ switch ($route[0]) {
       case 'GET':
         switch ($route[1]) {
           case 'posts':
-            $result = getAuthorPosts($id);
+            $result = getAuthorPosts($_SESSION['user']['id']);
             $meta['status'] = 200;
             break;
           case '':
@@ -98,9 +98,11 @@ switch ($route[0]) {
                 $meta['status'] = 200;
                 break;
             }
+            break;
           case '':
             $result = getProfiles();
             $meta['status'] = 200;
+            break;
           }
         break;
     }
@@ -150,6 +152,7 @@ switch ($route[0]) {
                 $meta['status'] = 200;
                 break;
             }
+            break;
           case '':
             $result = getCourses(); //Not made yet
             $meta['status'] = 200;
@@ -208,7 +211,7 @@ switch ($route[0]) {
                     (is_null($result)) ? $meta['status'] = 401 : $meta['status'] = 200;
                     break;
                   case '':
-                    $result = getAllComments();
+                    $result = getComments($id);
                     (is_null($result)) ? $meta['status'] = 401 : $meta['status'] = 200;
                     break;
                 }
@@ -225,8 +228,16 @@ switch ($route[0]) {
       case 'POST':
         switch ($route[1]) {
           case '':
-            $result = newPost($post);
+            $result = newPost($data);
             $meta['status'] = 201;
+            break;
+          case 'id':
+            switch($route[2]) {
+              case 'comment':
+                $result = newComment($id, $data);
+                $meta['status'] = 201;
+                break;
+            }
             break;
           }
         break;
@@ -243,6 +254,11 @@ if (!isset($meta['status'])) {
   $meta['status'] = 400;
   $meta['msg'] = 'Invalid url';
 }
+else if ($meta['status']===401) {
+  $meta['success'] = false;
+  $meta['msg'] = 'Unauthorised or Invalid ID';
+}
+
 
 send($meta, $result);
 ?>

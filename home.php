@@ -3,8 +3,8 @@
 
 <head>
   <link rel="stylesheet" type="text/css" href="template.css">
-  <script src="lib/general/main.js"></script>
   <script src="lib/general/classes.js"></script>
+  <script src="lib/general/main.js"></script>
   <script src="lib/bin/home.js"></script>
   <meta charset="UTF-8">
   <title>UniPages</title>
@@ -39,7 +39,16 @@
       <label class="tabbar" for="tab5"><span><h3 class="tab-label">Repository</h3></span></label>
 
       <section id="content1" class="tab-content">
-        <ul class="content">
+        <li class="panel">
+          <div class="offset">
+            <form class="post-input" onsubmit="newPost(content.value);return false;">
+              <h3>New Post</h3>
+              <textarea class="form-control" cols="50" rows="3" style="resize:vertical" name="content"></textarea>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+          </div>
+        </li>
+        <ul class="content" id="general-posts">
           <li class="panel">
             <div class="offset">
               <h3><a href="">Author</a> To <a href="">Target</a>:</h3>
@@ -73,7 +82,7 @@
 
           <li class="panel">
             <div class="offset">
-              <form class="post-input">
+              <form class="post-input" onsubmit='newPost(content.value);return false;'>
                 <h3>New Post</h3>
                 <textarea class="form-control" cols="50" rows="3" style="resize:vertical" name="comment"></textarea>
                 <button type="submit" class="btn btn-default">Submit</button>

@@ -6,7 +6,9 @@
 session_start();
 $request = $_SERVER['REQUEST_METHOD'];
 $data = null;//MIGHT NOT NEED TO GO IN IF POST?
-if ($request=='POST') {$data = json_decode(file_get_contents('php://input'));}
+if ($request==='POST') {
+  $data = (array)json_decode(file_get_contents('php://input'))->payload;
+}
 
 //BUILD ROUTE
 $basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)).'/';
@@ -29,15 +31,15 @@ if (!isset($route[2])) { array_push($route, ''); }
 if (!isset($route[3])) { array_push($route, ''); }
 
 if (is_numeric($route[1])) {
-  $id = "'".$route[1]."'";
+  $id = (int)$route[1];
   $route[1] = 'id';
 }
 if (is_numeric($route[2])) {
-  $id = $route[2];
+  $id = (int)($route[2]);
   $route[2] = 'id';
 }
 if (is_numeric($route[3])) {
-  $id = $route[3];
+  $id = (int)$route[3];
   $route[3] = 'id';
 }
 
