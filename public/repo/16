@@ -1,0 +1,8 @@
+class MyOtherThread extends MyThread {
+
+    public void run() {
+
+        System.out.println("Thread " + name +
+                               " removed message " + q.rem()) ;
+    }
+}

@@ -1,0 +1,14 @@
+class MyThread extends Thread {
+
+    volatile static Queue q ;
+    String name ;
+
+    public void run() {
+        MyOtherThread reader = new MyOtherThread();
+        for(int i = 0 ; i < 100000 ; i++) {
+            q.add("message " + i) ;
+            System.out.println("Added " + i);
+            reader.run();
+        }
+    }
+}

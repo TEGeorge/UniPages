@@ -5,6 +5,9 @@
     $bind = array($id);
     $sql = 'SELECT * FROM University WHERE id = ?';
     $result = $DB -> query($sql, $bind);
+    if (!isset($result[0])) {
+      return null;
+    }
     return $result[0];
   }
 
@@ -24,8 +27,11 @@
   function getProfile($id) {
     $DB = new DB;
     $bind = array($id);
-    $sql = 'SELECT id, eid, fname, surname, university, course, bio, privacy FROM Profile where id = ?';
+    $sql = 'SELECT id, eid, fname, surname, university, course, bio, privacy FROM Profile WHERE id = ?';
     $result = $DB -> query($sql, $bind);
+    if (!isset($result[0])) {
+      return null;
+    }
     $result = $result[0];
     $result['university'] = getUniversity($result['university']);
     $result['course'] = getCourse($result['course']);
@@ -194,11 +200,13 @@
     if (is_null($result)) {
       return null;
     }
+    $posts = array();
     foreach ($result as $post) {
       $post = getPostInfo($post);  //DO CHANGES TO POST CHANGE RESULT ARRAY??????
       $post['comments'] = getComments($post['id']);
+      array_push($posts, $post);
     }
-    return $result;
+    return $posts;
   }
 
   function getAuthorPosts($id, $offset = 0, $limit = 20) {
@@ -206,6 +214,9 @@
     $bind = array($id);
     $sql = 'SELECT * FROM Post WHERE author = ? ORDER BY updated DESC';
     $result = $DB -> query($sql, $bind);
+    if (is_null($result)) {
+      return null;
+    }
     $posts = array();
     foreach ($result as $post) {
       $post = getPostInfo($post);  //DO CHANGES TO POST CHANGE RESULT ARRAY??????
@@ -238,7 +249,7 @@
   function getComments($id) {
     $DB = new DB;
     $bind = array($id);
-    $sql = 'SELECT * FROM Comment WHERE post = ? ORDER BY created DESC';
+    $sql = 'SELECT * FROM Comment WHERE post = ? ORDER BY created ASC';
     $result = $DB -> query($sql, $bind);
     if (is_null($result)) {
       return $result;

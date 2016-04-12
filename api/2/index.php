@@ -1,14 +1,15 @@
 <?php
+session_start();
 /*
     Script recieves income API requests, breaks downt the request & rebuilds then sends response
 */
 
-session_start();
+
 $request = $_SERVER['REQUEST_METHOD'];
 $data = null;//MIGHT NOT NEED TO GO IN IF POST?
 if ($request==='POST') {
-  $data = (array)json_decode(file_get_contents('php://input'))->payload;
-}
+    $data = (array)json_decode(file_get_contents('php://input'))->payload;
+  }
 
 //BUILD ROUTE
 $basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)).'/';
@@ -46,12 +47,11 @@ if (is_numeric($route[3])) {
 include __DIR__.'/router.php';
 
 function send($meta, $payload=null ) {
-
   $format = 'json';
 
   if (isset($meta['success']) && $meta['success'] == false) {
     if (!isset($meta['status'])) { $meta['status'] = 500; }
-    if (!isset($meta['msg'])) { $meta['msg'] = "Don't Panic"; }
+    if (!isset($meta['msg'])) { $meta['msg'] = "Don't Panic, unidentified error, no msg set"; }
   } else {
     if (!isset($meta['msg'])) { $meta['msg'] = "Success"; }
   }
@@ -70,5 +70,15 @@ function send($meta, $payload=null ) {
     case 'xml':
     break;
   }
+
+  exit();
+}
+
+function redirect($url, $msg) {
+  $meta['status'] = 302;
+  $meta['success'] = true;
+  header('Location: http://localhost:8080'.$url);
+  $meta['msg'] = $msg;
+  send($meta);
 }
 ?>

@@ -1,27 +1,45 @@
 <?php
-
 require __DIR__.'/../../inc/include.php';
 
 $meta = [];
 $meta['success'] = true;
 $meta['request'] = $request;
 $meta['path'] = $route;
-
-//TESTING PURPOSES
-$_SESSION['authorised'] = True;
-$_SESSION['login'] = True;
-$_SESSION['user']['id'] = 2;
+$result = null;
 
 //STATE: UNAUTHORISED user
 //ACTIONS: user CAN ONLY AUTHORISE
-if (!isset($_SESSION['authorised']) || $_SESSION['authorised'] = False) {
+
+switch ($route[0]) {
+  case 'logout':
+    logout();
+    break;
+  case 'debug':
+    switch($route[1]) {
+      case 'login':
+        $_SESSION['user']['id'] = 2;
+        $_SESSION['login'] = TRUE;
+        $_SESSION['authorised'] = TRUE;
+        $meta['status'] = 200;
+        break;
+      case 'session':
+        $meta['status'] = 200;
+        $result = $_SESSION;
+        break;
+    }
+    break;
+}
+
+if (!isset($_SESSION['authorised']) || $_SESSION['authorised'] == False) {
   if($request==='GET') {
     switch ($route[0]) {
       case 'oauth':
-        oauth();
         switch ($route[1]) {
           case 'authorise':
-              oauthAuthorise();
+              authorise();
+            break;
+          case '':
+            initate();
             break;
         }
         break;
@@ -57,10 +75,40 @@ else if (!isset($_SESSION['login']) || $_SESSION['login'] === FALSE) {
 //STATE: user IS AUTHORISED & IS LOGGED IN
 
 //UPDATE USER ACCOUNT IN CASE OF CHANGES
+//DOES NOT WORK
 $_SESSION['user'] = getProfile($_SESSION['user']['id']);
 
 //MAIN ROUTER
 switch ($route[0]) {
+  case 'repo':
+  switch ($request) {
+    case 'POST':
+      switch($route[1]) {
+        case 'id':
+          $meta['status'] = 200;
+          repoUpload($id);
+          $result = json_decode($_POST['payload']);
+          break;
+        }
+      break;
+  }
+    break;
+  case 'search':
+    switch ($request) {
+      case 'POST':
+        switch ($route[1]) {
+          case 'profile':
+            break;
+          case 'university':
+            break;
+          case 'course':
+            break;
+          case 'group':
+            break;
+        }
+        break;
+    }
+    break;
   case 'user':
     switch ($request) {
       case 'GET':
@@ -75,15 +123,20 @@ switch ($route[0]) {
             break;
         }
         break;
-      case 'PUT':
-        //FILLER
+      case 'POST':
+        switch ($route[1]) {
+          case 'picture':
+            pictureUpload($_SESSION['user']['eid']);
+            $meta['status'] = 200;
+          break;
+        }
         break;
       case 'DELETE':
         //FILLER
         break;
     }
-  break;
-  case 'profiles':
+    break;
+  case 'profile':
     switch ($request) {
       case 'GET':
         switch ($route[1]) {
@@ -122,9 +175,11 @@ switch ($route[0]) {
                 $meta['status'] = 200;
                 break;
             }
+            break;
           case '':
             $result = getUniversities(); //Not made yet
             $meta['status'] = 200;
+            break;
           }
         break;
       case 'POST':
@@ -244,6 +299,18 @@ switch ($route[0]) {
       case 'PUT':
         break;
       case 'DELETE':
+        break;
+    }
+    break;
+  case 'entity':
+    switch ($request) {
+      case 'GET':
+        switch($route[1]) {
+          case 'id':
+            $result = getEntity($id);
+            (is_null($result)) ? $meta['status'] = 401 : $meta['status'] = 200;
+            break;
+        }
         break;
     }
     break;
