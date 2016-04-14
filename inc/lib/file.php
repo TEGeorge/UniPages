@@ -48,7 +48,7 @@ function repoUpload($id) {
     $result = $DB->insertQuery($sql, $bind);
     $result = move_uploaded_file($loc, $dir.$result);
     if (!$result) {
-      invalid('Could not upload file');
+      invalid("Could not upload file");
     }
   }
   return true;

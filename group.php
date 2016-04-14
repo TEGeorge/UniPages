@@ -118,6 +118,7 @@
         <button id="member" onclick="leave();location.reload();">Leave</button>
         <h2 id="name">(PLACEHOLDER)</h2>
         <img src="http://placekitten.com/200/200" onerror="this.src='http://placekitten.com/200/200'" alt="profile picture" id="profile-picture">
+        <br><button id="owner" onclick="redirectUploadPicture();">Change Picture</button>
         <h4><strong>University: <br></strong> <a id="university">(PLACEHOLDER) </a> <br> </h4>
         <h4 id="info_course"><strong>Course: <br></strong> <a id="course">(PLACEHOLDER) </a> <br> </h4>
         <h4><strong>Description: <br></strong> <a id="description">(PLACEHOLDER) </a> <br> </h4>

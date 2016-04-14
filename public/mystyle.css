@@ -17,6 +17,18 @@ h3 {
   color: #2196f3;
 }
 
+button {
+  color: #2196f3;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+header button {
+  background: #90caf9;
+}
+
 header{
   box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.2);
   position: relative;
@@ -78,6 +90,10 @@ table {
 #links th, #links td {
     padding: 15px;
     text-align: left;
+}
+
+#owner {
+  display: none;
 }
 
 #links table, #links th, #links td {
@@ -159,24 +175,6 @@ form {
   margin: 0 auto;
   width: 95%;
   padding-top: 3px;
-}
-
-.square {
-    float:left;
-    position: relative;
-    width: 15%;
-    max-height: 2px;
-    padding-bottom : 15%; /* = width for a 1:1 aspect ratio */
-    margin:1.66%;
-    border: solid;
-    background-position:center center;
-    background-repeat:no-repeat;
-    background-size:cover; /* you change this to "contain" if you don't want the images to be cropped */
-}
-
-.square:hover {
-  cursor: pointer;
-  background: #eeeeee;
 }
 
 #bottom {

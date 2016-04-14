@@ -69,6 +69,10 @@
     foreach($result as $group) {
       $entity = getEntity($group['entity']);
       $group = getGroupInfo($entity['entity']);
+      $group['owner'] = false;
+      if($group['owner']===$_SESSION['user']['id']) {
+        $group['owner'] = true;
+      }
       array_push($groups, $group);
     }
     return $groups;
@@ -147,6 +151,12 @@
     $result['university'] = getUniversity($result['university']);
     if (!is_null($result['course'])) {
       $result['course'] = getCourse($result['course']);
+    }
+    if($result['owner'] === $_SESSION['user']['id']) {
+      $result['owner'] = TRUE;
+    }
+    else {
+      $result['owner'] = FALSE;
     }
     return $result;
   }
@@ -409,9 +419,9 @@
       $course = $_SESSION['user']['course']['id'];
     }
     else {$course = null;}
-    $bind = array($entity, $data['name'], $data['description'], $_SESSION['user']['university']['id'], $course, $data['isprivate'], $data['isunit']);
-    $sql = "INSERT INTO `Group` (eid, name, description, university, course, isprivate, isunit)
-      VALUES (?, ?, ?, ?, ?, ?, ?);";
+    $bind = array($entity, $data['name'], $data['description'], $_SESSION['user']['university']['id'], $course, $data['isprivate'], $data['isunit'], $_SESSION['user']['id']);
+    $sql = "INSERT INTO `Group` (eid, name, description, university, course, isprivate, isunit, owner)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
     $id = $DB -> insertQuery($sql, $bind);
     $sql = 'UPDATE Entity SET entity=? WHERE id=?;';
     $bind = array($id, $entity);

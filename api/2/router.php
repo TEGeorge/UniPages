@@ -104,6 +104,18 @@ $_SESSION['user'] = getUser($_SESSION['user']['id']);
 
 //MAIN ROUTER
 switch ($route[0]) {
+  case 'picture':
+    switch ($request) {
+      case 'POST':
+        switch ($route[1]) {
+          case 'id':
+            pictureUpload($id);
+            $meta['status'] = 200;
+            break;
+        }
+        break;
+    }
+    break;
   case 'search':
     switch ($request) {
       case 'GET':
