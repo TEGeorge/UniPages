@@ -2,7 +2,6 @@
 <html>
 
 <head>
-  <php ? session_start(); ?>
     <title>UniPages</title>
 
     <script src="test.js"></script>
@@ -16,55 +15,48 @@
 
   <style>
     #dnd {
-      border: 10px solid black;
+      border: 2px dashed grey;
       text-align: center;
       padding: 10px;
-      width: 400px;
-      height: 100px;
-      margin: auto;
-      font-size: 40px;
+      width: 200px;
+      height: 200px;
       display: inline-block;
     }
   </style>
   <form onsubmit="dndUpload();return false;">
-    <div id="dnd">DROP!</div>
-    <button type="submit">Submit</button>
+    <div id="dnd"><h3>Drag and drop files/folders here</h3></div>
+    <div id="uploaded" style="height:150px;overflow:auto;width:25%;">
+      <table id="upload" style="width:100%;">
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Size</th>
+        </tr>
+        <tbody id="data">
+
+        </tbody>
+      </table>
+    </div>
+    <button type="submit">Upload</button>
+
   </form>
 
-  <script>
-    var dnd = document.getElementById("dnd");
-    dnd.ondragover = function(e) {
-      e.preventDefault()
-    }
-    dnd.ondrop = function(e) {
-      e.preventDefault();
 
-      var transfer = e.dataTransfer;
-
-      if (transfer.getFilesAndDirectories) {
-        handleFirefoxUpload(transfer);
-      }
-    }
-
-    function handleFirefoxUpload(transfer) {
-      var promise = transfer.getFilesAndDirectories();
-      promise.then(function(files) {
-        console.log("dropped items: " + files.length);
-        for (var i = 0, arrSize = files.length; i < arrSize; i++) {
-          var file = files[i];
-          iterateFilesAndDirs(file, "");
-        }
-      })
-    }
-
-
-  </script>
-
-
-
-
-
-
+  <form>
+    <div id="repo" style="height:150px;overflow:auto;width:25%;">
+    <table id="repotable" style="width:100%;">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Size</th>
+      </tr>
+      <tbody id="files">
+      </tbody>
+    </table>
+    </div>
+    <button type="submit">Download</button>
+    <button type="submit">Delete</button>
+  </form>
   <form onsubmit="upload('/user/picture', input.files[0]);return false;">
     <input name="input" type="file">
     <button type="submit">Submit</button>

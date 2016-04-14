@@ -11,11 +11,9 @@
   function initate() {
     $state =  md5(uniqid(rand(), TRUE));
     $_SESSION['state'] = $state;
-    $meta['status'] = 200;
-    $meta['success'] = true;
-    $meta['msg'] = 'Redirecting to google for authorisation';
-    $meta['redirect'] = "".AUTH_ENDPOINT."?client_id=".CLIENT_ID."&response_type=".RESPONSE_TYPE."&scope=".SCOPE."&redirect_uri=".REDIRECT."&state=".$state;
-    send($meta);
+    $msg = 'Redirecting to google for authorisation';
+    $url = "".AUTH_ENDPOINT."?client_id=".CLIENT_ID."&response_type=".RESPONSE_TYPE."&scope=".SCOPE."&redirect_uri=".REDIRECT."&state=".$state;
+    redirect($url, $msg);
     }
 
   function authorise() {
@@ -39,10 +37,18 @@
       $_SESSION['sub'] = $body['sub'];
       $login = getLogin($body['sub']);
       if (is_null($login)) {
-        redirect('/new/user', 'No profile found, please create a profile');
+        header('Location: http://localhost:8080/new/user.php');
+        $meta['success'] = true;
+        $meta['status'] = 302;
+        $meta['Please create a user account'];
+        send($meta);
       }
       else {
         login($login);
+        header('Location: http://localhost:8080/home.php');
+        $meta['success'] = true;
+        $meta['status'] = 302;
+        send($meta);
       }
     }
     else {
@@ -68,12 +74,11 @@
 
   function login ($login) {
     $DB = new DB;
-    $user = getProfile($login['profile']);
+    $user = getUser($login['profile']);
     if ($user) {
       $_SESSION['user'] = $user;
       $_SESSION['login'] = true;
       $_SESSION['sub'] = null;
-      redirect('/home.php', 'Successfully logged in');
     }
   }
 

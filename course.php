@@ -118,6 +118,10 @@
         <img src="http://placekitten.com/200/200" onerror="this.src='http://placekitten.com/200/200'" alt="profile picture" id="profile-picture">
         <h4><strong>Description: <br></strong> <a id="description">(PLACEHOLDER) </a> <br> </h4>
         <h4><strong>University: <br></strong> <a id="university">(PLACEHOLDER) </a> <br> </h4>
+        <h4 id="info_units"><strong>Units: <br></strong>
+          <ul id="units">
+          </ul>
+        </h4>
       </div>
     </div>
   </section>

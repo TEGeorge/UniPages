@@ -29,7 +29,7 @@
             <form class="post-input" onsubmit="newPost(content.value);return false;">
               <h3>New Post</h3>
               <textarea class="form-control" cols="50" rows="3" style="resize:vertical" name="content"></textarea>
-              <button type="submit" class="btn btn-default">Submit</button>
+              <button type="submit">Submit</button>
             </form>
           </div>
         </li>
@@ -114,10 +114,14 @@
     <div class="infopanel">
       <div class="info-container">
         <h2 id="name">(PLACEHOLDER)</h2>
-        <img src="http://placekitten.com/200/200" onerror="this.src='http://placekitten.com/200/200'" alt="profile picture" id="profile-picture">
+        <img src="http://placekitten.com/300/300" onerror="this.src='http://placekitten.com/300/300'" alt="profile picture" id="profile-picture">
         <h4><strong>University: <br></strong> <a id="university">(PLACEHOLDER) </a> <br> </h4>
         <h4><strong>Course: <br></strong> <a id="course">(PLACEHOLDER) </a> <br> </h4>
         <h4><strong>Bio: <br></strong> <a id="bio">(PLACEHOLDER) </a> <br> </h4>
+        <h4 id="info_groups"><strong>Groups: <br></strong>
+        <ul id="groups">
+        </ul>
+      </h4>
       </div>
 
     </div>

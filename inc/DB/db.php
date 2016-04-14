@@ -46,7 +46,6 @@ class DB
 
   public function query ($statement, $bind = null) {
     try{
-
       $sth = $this->pdo->prepare($statement);
       $sth->execute($bind);
       return $sth->fetchAll(PDO::FETCH_ASSOC);

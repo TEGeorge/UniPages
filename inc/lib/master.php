@@ -1,5 +1,36 @@
 <?php
 
+  function searchProfile($string) {
+    $DB = new DB;
+    $bind = array('%'.$string.'%', '%'.$string.'%');
+    $sql = 'SELECT id, eid, fname, surname, bio FROM Profile WHERE fname LIKE ? OR surname LIKE ?';
+    $result = $DB -> query($sql, $bind);
+    return $result;
+  }
+
+  function getUniversities() {
+    $DB = new DB;
+    $sql = 'SELECT id, name FROM University';
+    $result = $DB -> query($sql);
+    return $result;
+  }
+
+  function getCourses($id) {
+    $DB = new DB;
+    $bind = array($id);
+    $sql = 'SELECT id, name FROM Course WHERE university = ?';
+    $result = $DB -> query($sql, $bind);
+    return $result;
+  }
+
+  function searchGroup($string) {
+    $DB = new DB;
+    $bind = array('%'.$string.'%');
+    $sql = 'SELECT id, eid, name, description FROM `Group` WHERE name LIKE ?';
+    $result = $DB -> query($sql, $bind);
+    return $result;
+  }
+
   function getUniversity($id) {
     $DB = new DB;
     $bind = array($id);
@@ -9,6 +40,38 @@
       return null;
     }
     return $result[0];
+  }
+
+  function getUser($id) {
+    $DB = new DB;
+    $bind = array($id);
+    $sql = 'SELECT * FROM Profile WHERE id = ?';
+    $result = $DB -> query($sql, $bind);
+    if (!isset($result[0])) {
+      return null;
+    }
+    $result = $result[0];
+    $result['university'] = getUniversity($result['university']);
+    $result['course'] = getCourse($result['course']);
+    $result['groups'] = getUserGroups($id);
+    return $result;
+  }
+
+  function getUserGroups($id) {
+    $DB = new DB;
+    $bind = array($id);
+    $sql = 'SELECT * FROM Membership WHERE profile = ?';
+    $result = $DB -> query($sql, $bind);
+    if (!isset($result[0])) {
+      return null;
+    }
+    $groups = array();
+    foreach($result as $group) {
+      $entity = getEntity($group['entity']);
+      $group = getGroupInfo($entity['entity']);
+      array_push($groups, $group);
+    }
+    return $groups;
   }
 
   function getCourse($id) {
@@ -21,6 +84,7 @@
     }
     $result = $result[0];
     $result['university'] = getUniversity($result['university']);
+    $result['units'] = getUnits($id);
     return $result;
   }
 
@@ -39,16 +103,14 @@
   }
 
   function getSurfaceProfile ($id) {
-    $result = getProfile($id);
-    if (is_null($result)) {
+    $DB = new DB;
+    $bind = array($id);
+    $sql = 'SELECT id, eid, fname, surname FROM Profile WHERE id = ?';
+    $result = $DB -> query($sql, $bind);
+    if (is_null($result[0])){
       return null;
     }
-    $profile['id'] = $result['id'];
-    $profile['eid'] = $result['eid'];
-    $profile['fname'] = $result['fname'];
-    $profile['surname'] = $result['surname'];
-    $profile['privacy'] = $result['privacy'];
-    return $profile;
+    return $result[0];
   }
 
   //NOT FINISHED
@@ -68,6 +130,14 @@
     return (object)$profiles;
   }
 
+  function getUnits($id) {
+    $DB = new DB;
+    $bind = array($id);
+    $sql = 'SELECT * FROM `Group` WHERE isunit =1 AND course = ?';
+    $result = $DB -> query($sql, $bind);
+    return $result;
+  }
+
   function getGroup($id) {
     $DB = new DB;
     $bind = array($id);
@@ -77,24 +147,17 @@
     $result['university'] = getUniversity($result['university']);
     if (!is_null($result['course'])) {
       $result['course'] = getCourse($result['course']);
-      $result['unit'] = isUnit($id);
     }
     return $result;
   }
 
-  //CHECK FOR NO RESULTS ON ALL SELECTS?
-  //NEEDS LOTS OF TESTING FOR WHAT AN EMPTY ASSOC ARRAY LOOKS LIKE
-  function isUnit($id) {
+  function getGroupInfo($id) {
     $DB = new DB;
     $bind = array($id);
-    $sql = 'SELECT * FROM Unit WHERE group = ?';
+    $sql = 'SELECT * FROM `Group` WHERE id = ?';
     $result = $DB -> query($sql, $bind);
-    if ($count($result) === 0) {
-      return FALSE;
-    }
-    else {
-      return TRUE;
-    }
+    $result = $result[0];
+    return $result;
   }
 
   function authorised($eid) {
@@ -118,19 +181,28 @@
   //NEEDS TO CHECK MEMBERSHIP AND COURSE
   function groupAuth($id) {
     $result = getGroup($id);
-    if ($result['university']['id']===$_SESSION['user']['university']['id']) {
+    if (isMember($result['eid'])) {
       return TRUE;
     }
     return FALSE;
   }
 
-  //Check course and access level
-  function profileAuth($profile) {
-    $access = $profile['privacy'];
-    if ($access=0) {
+  function isMember($eid){
+    $DB = new DB;
+    $sql = 'SELECT * FROM Membership WHERE profile = ? AND entity = ?';
+    $bind = array($_SESSION['user']['id'], $eid);
+    $result = $DB->query($sql, $bind);
+    if (is_null($result[0])) {
       return FALSE;
     }
-    else if ($profile['university']['id']===$_SESSION['user']['university']['id'] && $access=3) {
+    return TRUE;
+  }
+
+  //Check course and access level
+  function profileAuth($id) {
+    $profile = getProfile($id);
+    $access = $profile['privacy'];
+    if ($profile['university']['id']===$_SESSION['user']['university']['id']) {
       return TRUE;
     }
     //COURSE & ACCESS = 2
@@ -139,15 +211,17 @@
   }
 
   //Check course?
-  function courseAuth($course) {
+  function courseAuth($id) {
+    $course = getCourse($id);
     if ($course['id']===$_SESSION['user']['course']['id']) {
       return TRUE;
     }
     return FALSE;
   }
 
-  function universityAuth($university) {
-    if ($university['university']['id']===$_SESSION['user']['university']['id']) {
+  function universityAuth($id) {
+    $university = getUniversity($id);
+    if ($university['id']===$_SESSION['user']['university']['id']) {
       return TRUE;
     }
     return FALSE;
@@ -193,6 +267,11 @@
 
   function getTargetPosts($id, $type, $offset = 0, $limit = 20) {
     $entity = getEntityId($id, $type);
+    if (!authorised($entity)) {
+      $meta['status'] = 401;
+      $meta['msg'] = 'Unauthorised, you are not a member of this group';
+      send($meta, false);
+    }
     $DB = new DB;
     $bind = array($entity);
     $sql = 'SELECT * FROM Post WHERE target = ? ORDER BY updated DESC'; //LIMIT ? ? MISSING
@@ -211,6 +290,9 @@
 
   function getAuthorPosts($id, $offset = 0, $limit = 20) {
     $DB = new DB;
+    if (!profileAuth($id)) {
+      return null;
+    }
     $bind = array($id);
     $sql = 'SELECT * FROM Post WHERE author = ? ORDER BY updated DESC';
     $result = $DB -> query($sql, $bind);
@@ -264,6 +346,9 @@
 
   function newPost($data) {
     $DB = new DB;
+    if(!authorised($data['target'])) {
+      return null;
+    }
     if(!isset($data['isquestion'])) {$data['isquestion'] = 0;}
     $bind = array ($_SESSION['user']['id'], $data['target'], $data['isquestion'], $data['content']);
     $sql = 'INSERT INTO Post (author, target, updated, isquestion, content) VALUES (?, ?, CURRENT_TIMESTAMP, ?, ?)';
@@ -272,7 +357,11 @@
   }
 
   function newComment($post, $data) {
-    $DB = new DB; //VALID POST?
+    $DB = new DB;
+    $result = getPost($post);
+    if(!authorised($result['target']['eid'])) {
+      return null;
+    }
     $bind = array ($post, $_SESSION['user']['id'], $data['content']);
     $sql = 'INSERT INTO Comment (post, author, content) VALUES (?, ?, ?)';
     $id = $DB -> insertQuery($sql, $bind);
@@ -295,28 +384,71 @@
     $entity = $DB -> insertQuery($sql);
     $bind = array($entity, $data['fname'], $data['surname'], $data['email'], $data['university'], $data['course'], $data['bio'], $data['privacy']);
     $sql = "INSERT INTO Profile (eid, fname, surname, email, university, course, bio, privacy)
-      VALUES (?, ?, ?, ?, ?, ?, ? ,? ,?);";
+      VALUES (?, ?, ?, ?, ?, ?, ? ,?);";
     $id = $DB -> insertQuery($sql, $bind);
     $sql = 'UPDATE Entity
       SET entity=?
       WHERE id=?;';
     $bind = array($id, $entity);
+    $entity = $DB -> insertQuery($sql, $bind);
+    $sql = 'INSERT INTO Login (id, profile) VALUES (?, ?)';
+    $bind = array($_SESSION['sub'], $id);
+    $result = $DB->insertQuery($sql, $bind);
+    $login['profile'] = $id;
+    login($login);
+    $meta['status'] = 302;
+    $meta['redirect'] = 'http://localhost:8080/home.php';
+    send($meta);
+  }
+
+  function newGroup($data) {
+    $DB = new DB;
+    $sql = "INSERT INTO Entity (type) VALUES ('group');";
     $entity = $DB -> insertQuery($sql);
+    if (isset($data['user']['course'])) {
+      $course = $_SESSION['user']['course']['id'];
+    }
+    else {$course = null;}
+    $bind = array($entity, $data['name'], $data['description'], $_SESSION['user']['university']['id'], $course, $data['isprivate'], $data['isunit']);
+    $sql = "INSERT INTO `Group` (eid, name, description, university, course, isprivate, isunit)
+      VALUES (?, ?, ?, ?, ?, ?, ?);";
+    $id = $DB -> insertQuery($sql, $bind);
+    $sql = 'UPDATE Entity SET entity=? WHERE id=?;';
+    $bind = array($id, $entity);
+    $entity = $DB -> insertQuery($sql, $bind);
+    joinGroup($id);
+    return $entity;
+  }
+
+  function joinGroup($id) {
+    $DB = new DB;
+    $entity = getGroup($id);
+    $sql = "INSERT INTO Membership (profile, access, entity) VALUES(?, ?, ?)";
+    $bind = array($_SESSION['user']['id'], "1", $entity['eid']);
+    $success = $DB -> insertQuery($sql, $bind);
+  }
+
+  function leaveGroup($id) {
+    $DB = new DB;
+    $entity = getGroup($id);
+    $sql = "DELETE FROM Membership WHERE profile=? AND entity=?;";
+    $bind = array($_SESSION['user']['id'], $entity['eid']);
+    $success = $DB -> insertQuery($sql, $bind);
   }
 
   function newCourse($data) {
     $DB = new DB;
     $sql = "INSERT INTO Entity (type) VALUES ('course');";
     $entity = $DB -> insertQuery($sql);
-    $bind = array($entity, $data['name'], $data['description'], $data['university']);
+    $bind = array($entity, $data['name'], $data['description'], $_SESSION['user']['university']['id']);
     $sql = "INSERT INTO Course (eid, name, description, university)
       VALUES (?, ?, ?, ?);";
-    $id = $DB -> insertQuery($sql);
+    $id = $DB -> insertQuery($sql, $bind);
     $sql = 'UPDATE Entity
       SET entity=?
       WHERE id=?;';
     $bind = array($id, $entity);
-    $entity = $DB -> insertQuery($sql);
+    $entity = $DB -> insertQuery($sql, $bind);
   }
 
   function newUniversity($data) {

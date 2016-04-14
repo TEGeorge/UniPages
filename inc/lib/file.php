@@ -39,22 +39,22 @@ function pictureUpload($id) {
 function repoUpload($id) {
   isFile(0);
   $dir = $_SERVER['DOCUMENT_ROOT']."/public/repo/";
-  $ref = json_decode($_POST['payload']);
   for ($i = 0; $i < count($ref); $i++) {
     $DB = new DB;
     $name = $_FILES[$i]["name"];
     $loc = $_FILES[$i]["tmp_name"];
-    $sql = "INSERT INTO Repository (eid, name, path) VALUES (?, ?, ?)";
-    $bind = array($id, $name, $ref[$i]);
+    $sql = "INSERT INTO Repository (eid, name, size, type) VALUES (?, ?, ?)";
+    $bind = array($id, $name, $_FILES[$i]["size"], $_FILES[$i]["type"]);
     $result = $DB->insertQuery($sql, $bind);
     $result = move_uploaded_file($loc, $dir.$result);
     if (!$result) {
       invalid('Could not upload file');
     }
   }
+  return true;
 }
 
-function fileUpload($file, $id) {
+function getRepo($id) {
 
 }
 

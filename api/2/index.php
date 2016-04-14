@@ -77,7 +77,7 @@ function send($meta, $payload=null ) {
 function redirect($url, $msg) {
   $meta['status'] = 302;
   $meta['success'] = true;
-  header('Location: http://localhost:8080'.$url);
+  $meta['redirect'] = $url;
   $meta['msg'] = $msg;
   send($meta);
 }
