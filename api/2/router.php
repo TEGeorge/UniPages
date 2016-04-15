@@ -157,18 +157,28 @@ switch ($route[0]) {
       case 'POST':
         switch($route[1]) {
           case 'id':
-            $result = repoUpload($id);
-            $meta['status'] = 200;
+            switch ($route[2]) {
+              case '':
+                $result = repoUpload($id);
+                $meta['status'] = 200;
+                break;
+            }
             break;
           }
         break;
       case 'GET':
-        switch($route[1]) {
-          case 'id':
+      case 'id':
+        switch ($route[2]) {
+          case '':
             $result = getRepo($id);
             $meta['status'] = 200;
             break;
-          }
+          case 'id':
+            $result = getFile($id);
+            $meta['status'] = 203;
+            $meta['format'] = 'file';
+            break;
+        }
         break;
     }
     break;

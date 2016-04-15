@@ -30,7 +30,7 @@ class DB
 
         if ($nRows==0)
         {
-          $this->pdo->exec(DUMMYDATA);
+          //$this->pdo->exec(DUMMYDATA);
         }
       }
       catch (PDOException $e) {

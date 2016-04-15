@@ -47,7 +47,9 @@ if (is_numeric($route[3])) {
 include __DIR__.'/router.php';
 
 function send($meta, $payload=null ) {
-  $format = 'json';
+  if(!isset($meta['format'])) {$meta['format']='json';}
+
+  $format = $meta['format'];
 
   if (isset($meta['success']) && $meta['success'] == false) {
     if (!isset($meta['status'])) { $meta['status'] = 500; }
@@ -62,12 +64,13 @@ function send($meta, $payload=null ) {
   header("HTTP/1.1 {$meta['status']} {$meta['msg']}");
 
   switch($format) {
-    case 'text':
-    break;
     case 'json':
+      header('Content-Type: application/json');
       echo json_encode($result);
     break;
-    case 'xml':
+    case 'file':
+      header('Content-Type: application/octet-stream');
+      readFile($payload);
     break;
   }
 

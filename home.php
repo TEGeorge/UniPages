@@ -85,25 +85,41 @@
         <ul class="content">
           <li class="panel">
             <div class="offset">
-              <h3>File Repository</h3>
-              <div class="square 1-1">
+              <h3>Repository</h3>
+              <div id="repo" style="height:400px;overflow:auto;">
+              <table id="repotable">
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Size</th>
+                </tr>
+                <tbody id="files">
+                </tbody>
+              </table>
               </div>
-              <div class="square folder">
-                <h1>Hello World My Name is tom</h1>
-              </div>
-              <div class="square img_1-3">
-                <h1>Hello World My Name is tom</h1>
-              </div>
-              <div class="square img_1-3">
-                <h1>Hello World My Name is tom</h1>
-              </div>
-              <div class="square img_1-3">
-                <h1>Hello World My Name is tom</h1>
-              </div>
-              <div id="bottom">
-                <h3>The End</h3>
-              </div>
-
+              <button onclick="downloadFile(currentRowId, currentName)">Download</button>
+              <button type="submit">Delete</button>
+            </div>
+          </li>
+          <li class="panel">
+            <div class="offset">
+              <h3>Upload Files</h3>
+              <form onsubmit="sendUpload();return false;">
+                <div id="dropzone"><h3>Drag and drop files/folders here</h3></div>
+                <div id="uploaded">
+                  <table>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Size</th>
+                    </tr>
+                    <tbody id="upload">
+                    </tbody>
+                  </table>
+                </div>
+                <button type="submit">Upload</button>
+                <p>Maximum Number of files 20 by php limit</p>
+              </form>
             </div>
           </li>
         </ul>

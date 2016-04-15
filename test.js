@@ -36,7 +36,7 @@ var pictureUpload = function (url, file) {
   data.append('picture', file);
 }
 
-var upload = function (url, data, payload) {
+var send = function (url, data, payload) {
   data.append('payload', JSON.stringify(payload));
   fetch('api/2'.concat(url), {
     method: 'POST',
@@ -49,14 +49,6 @@ var upload = function (url, data, payload) {
   .then(function (json) {
     document.getElementById('test').innerHTML = JSON.stringify(json, null, 4);
   });
-}
-
-var x = function (url, payload) {
-  var
-    upload = function () {
-      function picture (){console.log('hello world')}
-    };
-
 };
 
 function iterateFilesAndDirs(file, path) {
@@ -74,20 +66,21 @@ function iterateFilesAndDirs(file, path) {
     console.log("unknown file type: " + (typeof file));
   }
 }
-
-var dnd = document.getElementById("dnd");
-dnd.ondragover = function(e) {
-  e.preventDefault()
-}
-dnd.ondrop = function(e) {
-  e.preventDefault();
-
-  var transfer = e.dataTransfer;
-
-  if (transfer.getFilesAndDirectories) {
-    handleFirefoxUpload(transfer);
+window.onload = function () {
+  var dnd = document.getElementById("dnd");
+  dnd.ondragover = function(e) {
+    e.preventDefault()
   }
-}
+  dnd.ondrop = function(e) {
+    e.preventDefault();
+
+    var transfer = e.dataTransfer;
+
+    if (transfer.getFilesAndDirectories) {
+      handleFirefoxUpload(transfer);
+    }
+  }
+};
 
 function handleFirefoxUpload(transfer) {
   var promise = transfer.getFilesAndDirectories();
@@ -137,7 +130,7 @@ function dndUpload() {
     files.append(i, window.upload[i].file);
     json.push(window.upload[i].info);
   }
-  upload('/repo/0', files, json);
+  send('/repo/0', files, json);
   document.getElementById('data').innerHTML = "";
 }
 

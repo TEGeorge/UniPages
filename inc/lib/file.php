@@ -1,8 +1,5 @@
 <?php
 
-$REPO_DIR = $_SERVER['DOCUMENT_ROOT'].'/public/repo';
-$picture_dir = $_SERVER['DOCUMENT_ROOT'].'/public/picture';
-
 function isFile ($userfile) {
   if (isset($_FILES[$userfile]["name"]) && $_FILES[$userfile]["tmp_name"] != "") {
     return;
@@ -39,11 +36,11 @@ function pictureUpload($id) {
 function repoUpload($id) {
   isFile(0);
   $dir = $_SERVER['DOCUMENT_ROOT']."/public/repo/";
-  for ($i = 0; $i < count($ref); $i++) {
+  for ($i = 0; $i < count($_FILES); $i++) {
     $DB = new DB;
     $name = $_FILES[$i]["name"];
     $loc = $_FILES[$i]["tmp_name"];
-    $sql = "INSERT INTO Repository (eid, name, size, type) VALUES (?, ?, ?)";
+    $sql = "INSERT INTO Repository (eid, name, size, type) VALUES (?, ?, ?, ?)";
     $bind = array($id, $name, $_FILES[$i]["size"], $_FILES[$i]["type"]);
     $result = $DB->insertQuery($sql, $bind);
     $result = move_uploaded_file($loc, $dir.$result);
@@ -55,7 +52,19 @@ function repoUpload($id) {
 }
 
 function getRepo($id) {
+  $DB = new DB;
+  $sql = 'SELECT * FROM Repository WHERE eid = ?';
+  $bind = array($id);
+  $result = $DB -> query($sql, $bind);
+  return $result;
+}
 
+function getFile($id) {
+  //$DB = new DB;
+  //$sql = 'SELECT eid FROM Repository WHERE id = ?';
+  //$bind = array($id);
+  //$result = $DB -> query($sql, $bind);
+  return $_SERVER['DOCUMENT_ROOT']."/public/repo/".$id;
 }
 
 function invalid ($msg) {

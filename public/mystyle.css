@@ -23,6 +23,7 @@ button {
   padding: 10px;
   border-radius: 50%;
   cursor: pointer;
+  background: #fafafa;
 }
 
 header button {
@@ -102,6 +103,15 @@ table {
 
 form {
   padding-bottom: 15px;
+}
+
+#uploaded {
+  height:150px;
+  overflow:auto;
+}
+
+table {
+  width:100%;
 }
 
 .infopanel {
@@ -213,9 +223,14 @@ ul, li {
   padding: 0;
 }
 
-
-
-
+#dropzone {
+  border: 2px dashed grey;
+  text-align: center;
+  padding: 10px;
+  width: 90%;
+  height: 200px;
+  display: inline-block;
+}
 
 #main section {
   display: none;
