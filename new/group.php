@@ -11,7 +11,7 @@
 
 <header>
   <div class="contentBox">
-    <h1><a href="http://localhost:8080/home.php">UniPages</a></h1>
+    <h1><a href="../home.php">UniPages</a></h1>
     <div id="controls">
       <button onclick="get('/logout');return false;">Log out</button>
     </div>

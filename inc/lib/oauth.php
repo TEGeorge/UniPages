@@ -6,13 +6,12 @@
   const CLIENT_SECRET = 'GvCdT1OKKnit8-1nYTxTTcDj';
   const RESPONSE_TYPE = 'code';
   const SCOPE = 'openid email profile';
-  const REDIRECT = 'http://localhost:8080/api/2/oauth/authorise';
 
   function initate() {
     $state =  md5(uniqid(rand(), TRUE));
     $_SESSION['state'] = $state;
     $msg = 'Redirecting to google for authorisation';
-    $url = "".AUTH_ENDPOINT."?client_id=".CLIENT_ID."&response_type=".RESPONSE_TYPE."&scope=".SCOPE."&redirect_uri=".REDIRECT."&state=".$state;
+    $url = "".AUTH_ENDPOINT."?client_id=".CLIENT_ID."&response_type=".RESPONSE_TYPE."&scope=".SCOPE."&redirect_uri=".'http://'.$_SERVER['HTTP_HOST'].'/api/2/oauth/authorise'."&state=".$state;
     redirect($url, $msg);
     }
 
@@ -23,7 +22,7 @@
         array(
         'method'  => 'POST', // Request Method
         'header'  => 'Content-type: application/x-www-form-urlencoded',
-        'content' => "code=".$_GET['code']."&client_id=".CLIENT_ID."&client_secret=".CLIENT_SECRET."&redirect_uri=".REDIRECT."&grant_type=authorization_code"
+        'content' => "code=".$_GET['code']."&client_id=".CLIENT_ID."&client_secret=".CLIENT_SECRET."&redirect_uri=".'http://'.$_SERVER['HTTP_HOST'].'/api/2/oauth/authorise'."&grant_type=authorization_code"
         )
       );
       $context = stream_context_create($aHTTP);
@@ -37,18 +36,17 @@
       $_SESSION['sub'] = $body['sub'];
       $login = getLogin($body['sub']);
       if (is_null($login)) {
-        header('Location: http://localhost:8080/new/user.php');
+        header('Location: http://'.$_SERVER['HTTP_HOST'].'/new/user.php');
         $meta['success'] = true;
         $meta['status'] = 302;
-        $meta['Please create a user account'];
+        $meta['format'] = 'url';
+        $meta['msg'] = 'Please create a user account';
         send($meta);
       }
       else {
         login($login);
-        header('Location: http://localhost:8080/home.php');
-        $meta['success'] = true;
-        $meta['status'] = 302;
-        send($meta);
+        header('Location: http://'.$_SERVER['HTTP_HOST'].'/home.php');
+        exit();
       }
     }
     else {

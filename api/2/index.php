@@ -72,6 +72,9 @@ function send($meta, $payload=null ) {
       header('Content-Type: application/octet-stream');
       readFile($payload);
     break;
+    case 'url':
+      header('Content-type: application/x-www-form-urlencoded');
+      echo $payload;
   }
 
   exit();
