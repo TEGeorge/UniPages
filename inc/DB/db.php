@@ -23,14 +23,14 @@ class DB
         $this->pdo->exec("use uniPages;");
 
         $this->pdo->exec(DBINIT); //CREATE TABLES
-        //INSERT DUMMY DATA IF NO DATA
+
+
         $nRows = $this->pdo->query('SELECT *
           FROM University
           LIMIT 1')->rowCount();
-
-        if ($nRows==0)
+        if ($nRows==0) //INSERT DUMMY DATA IF NO DATA
         {
-          //$this->pdo->exec(DUMMYDATA);
+          $this->pdo->exec(DUMMYDATA);
         }
       }
       catch (PDOException $e) {

@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php
+  session_start();
+  $_SESSION['authorised'] = TRUE;
+?>
 <head>
   <link rel="stylesheet" type="text/css" href="../public/mystyle.css">
   <script src="../lib/general/main.js"></script>
-  <script src="../lib/bin/edit.js"></script>
+  <script src="../lib/bin/new.js"></script>
   <meta charset="UTF-8">
   <title>UniPages</title>
 </head>
 
 <header>
   <div class="contentBox">
-    <h1><a href="../home.php">UniPages</a></h1>
+    <h1><a>UniPages</a></h1>
     <div id="controls">
       <button onclick="get('/logout');return false;">Log out</button>
     </div>
@@ -26,7 +29,7 @@
         <li class="panel">
           <div class="offset">
             <h2>New User:</h2>
-            <form class="" onsubmit="editUser(fname.value, surname.value, email.value, university.value, course.value, bio.value, private.value);return false;">
+            <form class="" onsubmit="newDebugUser(fname.value, surname.value, email.value, university.value, course.value, bio.value, private.value);return false;">
               <table style="width:50%">
                 <tr>
                   <td><label for="">First Name</label></td>
@@ -75,15 +78,7 @@
               </table>
 
             </form>
-            <form onsubmit="upload('/picture/0', input.files[0]);return false;">
-              <table style="width:50%">
-                <tr>
-                  <td><input name="input" type="file"></td>
-                  <td><button type="submit">Upload</button></td>
-                </tr>
 
-
-            </form>
           </div>
         </li>
 

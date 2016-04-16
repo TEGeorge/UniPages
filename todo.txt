@@ -1,0 +1,9 @@
+TODO:
+- Get light bulbs
+- Comment out index, router, file and oauth php (Master if I have time)
+
+- Documentation:
+  - Install.html - Short Paragraph
+  - Manual.html - User manual - Two pages
+  - lifecycle.html - My experience/how I managed by time - Two pages
+  - spec.html - The rationale behind my design/What I actually accomplished - Two pages

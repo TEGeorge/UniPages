@@ -26,7 +26,7 @@
     <div class="infopanel">
       <div class="info-container">
         <h2 id="name">(PLACEHOLDER)</h2>
-        <img src="http://placekitten.com/200/200" onerror="this.src='http://placekitten.com/200/200'" alt="profile picture" id="profile-picture">
+        <img onerror="this.src='/public/picture/placeholder'" alt="profile picture" id="profile-picture">
         <h4><strong>University: <br></strong> <a id="university">(PLACEHOLDER) </a> <br> </h4>
         <h4><strong>Course: <br></strong> <a id="course">(PLACEHOLDER) </a> <br> </h4>
         <h4><strong>Bio: <br></strong> <a id="bio">(PLACEHOLDER) </a> <br> </h4>

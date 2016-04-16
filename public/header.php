@@ -24,9 +24,9 @@
     <h1><a href="/home.php">UniPages</a></h1>
     <div id="controls">
       <button onclick="get('/logout');return false;">Log out</button>
-      <button>Manage Account</button>
-      <button onclick="location.href='http://localhost:8080/search.php';">Search</button>
-      <button onclick="location.href='http://localhost:8080/new/group.php';">New Group</button>
+      <button onclick="location.href='/search.php';">Search</button>
+      <button onclick="location.href='/new/group.php';">Create Group</button>
+      <button onclick="location.href='/new/group.php';">Create Course</button>
     </div>
   </div>
 </header>

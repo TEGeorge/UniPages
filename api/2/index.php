@@ -6,12 +6,14 @@ session_start();
 
 
 $request = $_SERVER['REQUEST_METHOD'];
-$data = null;//MIGHT NOT NEED TO GO IN IF POST?
+
+//Get data from POST
+$data = null;
 if ($request==='POST') {
     $data = (array)json_decode(file_get_contents('php://input'))->payload;
   }
 
-//BUILD ROUTE
+//Takes URL and breaks it into array
 $basepath = implode('/', array_slice(explode('/', $_SERVER['SCRIPT_NAME']), 0, -1)).'/';
 $uri = substr($_SERVER['REQUEST_URI'], strlen($basepath));
 if (strstr($uri, '?')) {
@@ -31,6 +33,7 @@ if (!isset($route[1])) { array_push($route, ''); }
 if (!isset($route[2])) { array_push($route, ''); }
 if (!isset($route[3])) { array_push($route, ''); }
 
+//If any route is numeric set the last as ID variable & define that route as 'id'
 if (is_numeric($route[1])) {
   $id = (int)$route[1];
   $route[1] = 'id';
@@ -46,6 +49,11 @@ if (is_numeric($route[3])) {
 
 include __DIR__.'/router.php';
 
+/**
+ * Function: Build and send response
+ * $meta: Used for sending debug infomation & headers
+ * $payload: Any data to be sent
+ */
 function send($meta, $payload=null ) {
   if(!isset($meta['format'])) {$meta['format']='json';}
 

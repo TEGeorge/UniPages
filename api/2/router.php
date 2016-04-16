@@ -1,15 +1,19 @@
 <?php
 require __DIR__.'/../../inc/include.php';
 
+/**
+ * Build meta default
+ */
 $meta = [];
 $meta['success'] = true;
 $meta['request'] = $request;
 $meta['path'] = $route;
 $result = null;
 
-//STATE: UNAUTHORISED user
-//ACTIONS: user CAN ONLY AUTHORISE
 
+/**
+ * Debug router
+ */
 switch ($route[0]) {
   case 'logout':
     logout();
@@ -17,11 +21,25 @@ switch ($route[0]) {
   case 'debug':
     switch($route[1]) {
       case 'login':
-        $_SESSION['user']['id'] = 3;
+        $_SESSION['user']['id'] = $id;
         $_SESSION['login'] = TRUE;
         $_SESSION['authorised'] = TRUE;
         $meta['status'] = 200;
+        $meta['redirect'] = 'http://'.$_SERVER['HTTP_HOST'].'/home.php';
         break;
+      case 'user':
+        if ($request==='GET') {
+          $result = getDebugProfiles();
+          $meta['status'] = 201;
+          send($meta, $result);
+        }
+        else {
+          $_SESSION['sub'] = 0;
+          $result = newProfile($data);
+          $meta['status'] = 201;
+          $meta['redirect'] = 'http://'.$_SERVER['HTTP_HOST'].'/home.php';
+          send($meta, $result);
+        }
       case 'session':
         $meta['status'] = 200;
         $result = $_SESSION;
@@ -30,6 +48,9 @@ switch ($route[0]) {
     break;
 }
 
+/**
+ * Router for unauthorised users
+ */
 if (!isset($_SESSION['authorised']) || $_SESSION['authorised'] == False) {
   if($request==='GET') {
     switch ($route[0]) {
@@ -53,8 +74,9 @@ if (!isset($_SESSION['authorised']) || $_SESSION['authorised'] == False) {
   exit;
 }
 
-//STATE: AUTHORISED BUT NO user profile FOUND
-//ACTIONS: user MUST CREATE ACCOUNT
+/**
+ * Router for authorised users but no profile
+ */
 else if (!isset($_SESSION['login']) || $_SESSION['login'] === FALSE) {
   switch($request) {
     case 'GET':
@@ -84,6 +106,7 @@ else if (!isset($_SESSION['login']) || $_SESSION['login'] === FALSE) {
         case 'user':
           $result = newProfile($data);
           $meta['status'] = 201;
+          $meta['redirect'] = 'http://'.$_SERVER['HTTP_HOST'].'/home.php';
           send($meta, $result);
           break;
       }
@@ -96,13 +119,11 @@ else if (!isset($_SESSION['login']) || $_SESSION['login'] === FALSE) {
   exit;
 }
 
-//STATE: user IS AUTHORISED & IS LOGGED IN
+$_SESSION['user'] = getUser($_SESSION['user']['id']); //Update user information
 
-//UPDATE USER ACCOUNT IN CASE OF CHANGES
-//DOES NOT WORK
-$_SESSION['user'] = getUser($_SESSION['user']['id']);
-
-//MAIN ROUTER
+/**
+ * Main router
+ */
 switch ($route[0]) {
   case 'picture':
     switch ($request) {
@@ -220,9 +241,6 @@ switch ($route[0]) {
           break;
         }
         break;
-      case 'DELETE':
-        //FILLER
-        break;
     }
     break;
   case 'profile':
@@ -301,15 +319,16 @@ switch ($route[0]) {
             }
             break;
           case '':
-            $result = getCourses(); //Not made yet
+            $result = getCourses();
             (is_null($result)) ? $meta['status'] = 204 : $meta['status'] = 200;
           }
         break;
       case 'POST':
         switch ($route[1]) {
           case '':
-            $result = newCourse($data); //Not made yet
+            $result = newCourse($data);
             $meta['status'] = 201;
+            $meta['redirect'] = 'http://'.$_SERVER['HTTP_HOST'].'/home.php';
             break;
           }
         break;
@@ -342,7 +361,7 @@ switch ($route[0]) {
           case '':
             $result = newGroup($data); //Not made yet
             $meta['status'] = 201;
-            $meta['redirect'] = 'http://localhost:8080/page.php?id='.$result;
+            $meta['redirect'] = 'http://'.$_SERVER['HTTP_HOST'].'/home.php';
             break;
           }
         break;
@@ -411,6 +430,9 @@ switch ($route[0]) {
     break;
 }
 
+/**
+ * Build status based inaction
+ */
 if (!isset($meta['status'])) {
   $meta['success'] = false;
   $meta['status'] = 400;

@@ -6,7 +6,7 @@
       $bind = array('%'.$string.'%', '%'.$string.'%');
       $sql = 'SELECT id, eid, fname, surname, bio FROM Profile WHERE fname LIKE ? OR surname LIKE ?';
       $result = $DB->query($sql, $bind);
-
+      $DB->close();
       return $result;
   }
 
@@ -15,7 +15,7 @@
       $DB = new DB();
       $sql = 'SELECT id, name FROM University';
       $result = $DB->query($sql);
-
+      $DB->close();
       return $result;
   }
 
@@ -25,7 +25,7 @@
       $bind = array($id);
       $sql = 'SELECT id, name FROM Course WHERE university = ?';
       $result = $DB->query($sql, $bind);
-
+      $DB->close();
       return $result;
   }
 
@@ -35,7 +35,7 @@
       $bind = array('%'.$string.'%');
       $sql = 'SELECT id, eid, name, description FROM `Group` WHERE name LIKE ?';
       $result = $DB->query($sql, $bind);
-
+      $DB->close();
       return $result;
   }
 
@@ -48,7 +48,7 @@
       if (!isset($result[0])) {
           return;
       }
-
+      $DB->close();
       return $result[0];
   }
 
@@ -65,7 +65,7 @@
       $result['university'] = getUniversity($result['university']);
       $result['course'] = getCourse($result['course']);
       $result['groups'] = getUserGroups($id);
-
+      $DB->close();
       return $result;
   }
 
@@ -88,7 +88,7 @@
           }
           array_push($groups, $group);
       }
-
+      $DB->close();
       return $groups;
   }
 
@@ -104,7 +104,7 @@
       $result = $result[0];
       $result['university'] = getUniversity($result['university']);
       $result['units'] = getUnits($id);
-
+      $DB->close();
       return $result;
   }
 
@@ -120,7 +120,7 @@
       $result = $result[0];
       $result['university'] = getUniversity($result['university']);
       $result['course'] = getCourse($result['course']);
-
+      $DB->close();
       return $result;
   }
 
@@ -133,27 +133,34 @@
       if (is_null($result[0])) {
           return;
       }
-
+      $DB->close();
       return $result[0];
   }
 
-  //NOT FINISHED
+  function getDebugProfiles() {
+    $DB = new DB();
+    $sql = 'SELECT * FROM Profile'; //BINDING IS NOT WORKING
+    $result = $DB->query($sql);
+    $DB->close();
+    return $result;
+  }
+
   function getProfiles()
   {
-      $DB = new DB();
-      $bind = array((int) $_SESSION['user']['university']['id']);
-      $sql = 'SELECT id FROM Profile WHERE university = ?'; //BINDING IS NOT WORKING
+    $DB = new DB();
+    $bind = array((int) $_SESSION['user']['university']['id']);
+    $sql = 'SELECT id FROM Profile WHERE university = ?'; //BINDING IS NOT WORKING
     $result = $DB->query($sql, $bind);
-      $profiles = array();
-      $i = 0;
-      foreach ($result as $profile) {
-          $profile = getSurfaceProfile($profile['id']);
-          if (profileAuth($profile)) {
-              array_push($profiles, $profile);
-          }
+    $profiles = array();
+    $i = 0;
+    foreach ($result as $profile) {
+      $profile = getSurfaceProfile($profile['id']);
+      if (profileAuth($profile)) {
+          array_push($profiles, $profile);
       }
-
-      return (object) $profiles;
+    }
+    $DB->close();
+    return (object) $profiles;
   }
 
   function getUnits($id)
@@ -162,7 +169,7 @@
       $bind = array($id);
       $sql = 'SELECT * FROM `Group` WHERE isunit =1 AND course = ?';
       $result = $DB->query($sql, $bind);
-
+      $DB->close();
       return $result;
   }
 
@@ -182,7 +189,7 @@
       } else {
           $result['owner'] = false;
       }
-
+      $DB->close();
       return $result;
   }
 
@@ -193,7 +200,7 @@
       $sql = 'SELECT * FROM `Group` WHERE id = ?';
       $result = $DB->query($sql, $bind);
       $result = $result[0];
-
+      $DB->close();
       return $result;
   }
 
@@ -236,7 +243,7 @@
       if (is_null($result[0])) {
           return false;
       }
-
+      $DB->close();
       return true;
   }
 
@@ -290,7 +297,7 @@
       $bind = array($type, $id);
       $sql = 'SELECT id FROM Entity WHERE type=? AND entity=?';
       $result = $DB->query($sql, $bind);
-
+      $DB->close();
       return $result[0]['id'];
   }
 
@@ -303,7 +310,7 @@
       if (is_null($result[0])) {
           return;
       }
-
+      $DB->close();
       return getPostInfo($result[0]);
   }
 
@@ -316,7 +323,7 @@
       if (is_null($result)) {
           return;
       }
-
+      $DB->close();
       return $result[0];
   }
 
@@ -341,7 +348,7 @@
       $post['comments'] = getComments($post['id']);
           array_push($posts, $post);
       }
-
+      $DB->close();
       return $posts;
   }
 
@@ -363,7 +370,7 @@
       $post['comments'] = getComments($post['id']);
           array_push($posts, $post);
       }
-
+      $DB->close();
       return $posts;
   }
 
@@ -403,7 +410,7 @@
           $comment['author'] = getSurfaceProfile($comment['author']);
           array_push($comments, $comment);
       }
-
+      $DB->close();
       return $comments;
   }
 
@@ -419,7 +426,7 @@
       $bind = array($_SESSION['user']['id'], $data['target'], $data['isquestion'], $data['content']);
       $sql = 'INSERT INTO Post (author, target, updated, isquestion, content) VALUES (?, ?, CURRENT_TIMESTAMP, ?, ?)';
       $id = $DB->insertQuery($sql, $bind);
-
+      $DB->close();
       return getPost($id);
   }
 
@@ -434,7 +441,7 @@
       $sql = 'INSERT INTO Comment (post, author, content) VALUES (?, ?, ?)';
       $id = $DB->insertQuery($sql, $bind);
       updatePost($post);
-
+      $DB->close();
       return getComment($id);
   }
 
@@ -446,6 +453,7 @@
               SET updated=NOW()
               WHERE id=?;';
       $result = $DB->insertQuery($sql, $bind);
+      $DB->close();
   }
 
   function newProfile($data)
@@ -467,9 +475,7 @@
       $result = $DB->insertQuery($sql, $bind);
       $login['profile'] = $id;
       login($login);
-      $meta['status'] = 302;
-      $meta['redirect'] = 'http://localhost:8080/home.php';
-      send($meta);
+      $DB->close();
   }
 
   function newGroup($data)
@@ -490,7 +496,7 @@
       $bind = array($id, $entity);
       $entity = $DB->insertQuery($sql, $bind);
       joinGroup($id);
-
+      $DB->close();
       return $entity;
   }
 
@@ -501,6 +507,7 @@
       $sql = 'INSERT INTO Membership (profile, access, entity) VALUES(?, ?, ?)';
       $bind = array($_SESSION['user']['id'], '1', $entity['eid']);
       $success = $DB->insertQuery($sql, $bind);
+      $DB->close();
   }
 
   function leaveGroup($id)
@@ -510,6 +517,7 @@
       $sql = 'DELETE FROM Membership WHERE profile=? AND entity=?;';
       $bind = array($_SESSION['user']['id'], $entity['eid']);
       $success = $DB->insertQuery($sql, $bind);
+      $DB->close();
   }
 
   function newCourse($data)
@@ -526,6 +534,12 @@
       WHERE id=?;';
       $bind = array($id, $entity);
       $entity = $DB->insertQuery($sql, $bind);
+      $sql = 'UPDATE Profile
+              SET course=?
+              WHERE id=?;';
+      $bind = array($id, $_SESSION['user']['id']);
+      $update = $DB->insertQuery($sql, $bind);
+      $DB->close();
   }
 
   function newUniversity($data)
@@ -542,11 +556,5 @@
       WHERE id=?;';
       $bind = array($id, $entity);
       $entity = $DB->insertQuery($sql);
+      $DB->close();
   }
-
-  /*
-$DB = new DB;
-$sql = '';
-$result = $DB -> query($sql);
-return $result[0];
- */;
