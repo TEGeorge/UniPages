@@ -1,5 +1,5 @@
 <?php
-//developers.google.com/identity/protocols/OpenIDconnect
+  //Helpful oAuth documentation: developers.google.com/identity/protocols/OpenIDconnect
   const AUTH_ENDPOINT = 'https://accounts.google.com/o/oauth2/v2/auth';
   const TOKEN_ENDPOINT = 'https://www.googleapis.com/oauth2/v4/token';
   const CLIENT_ID = '466310370318-garp5g36h3usomluf7eim8co06ick0lr.apps.googleusercontent.com';
@@ -7,6 +7,11 @@
   const RESPONSE_TYPE = 'code';
   const SCOPE = 'openid email profile';
 
+  /**
+   * Intiate oAuth
+   * Create state for identification
+   * Build redirect URL
+   */
   function initate() {
     $state =  md5(uniqid(rand(), TRUE));
     $_SESSION['state'] = $state;
@@ -15,23 +20,25 @@
     redirect($url, $msg);
     }
 
+  /**
+   * Authorise oAuth
+   * Identify response, communicate with google oAuth, decode respose
+   */
   function authorise() {
     if(isset($_GET['state']) && ($_GET['state'] === $_SESSION['state'])) {
       $aHTTP = array(
-      'http' => // The wrapper to be used
+      'http' =>
         array(
-        'method'  => 'POST', // Request Method
+        'method'  => 'POST',
         'header'  => 'Content-type: application/x-www-form-urlencoded',
         'content' => "code=".$_GET['code']."&client_id=".CLIENT_ID."&client_secret=".CLIENT_SECRET."&redirect_uri=".'http://'.$_SERVER['HTTP_HOST'].'/api/2/oauth/authorise'."&grant_type=authorization_code"
         )
       );
       $context = stream_context_create($aHTTP);
       $contents = file_get_contents(TOKEN_ENDPOINT, false, $context);
-        //No need for JWT verfication due to communication directly from google
-      //CONTENTS NEEDS PARSING
-      $results = (array)json_decode($contents);
-      list($header, $body, $sign) = explode(".", $results['id_token']);
-      $body = (array)json_decode(base64_decode($body));
+      $results = (array)json_decode($contents); //No need for JWT verfication due to communication directly from google
+      list($header, $body, $sign) = explode(".", $results['id_token']); //Split response JWT
+      $body = (array)json_decode(base64_decode($body)); //Decode body of response
       $_SESSION['authorised'] = true;
       $_SESSION['sub'] = $body['sub'];
       $login = getLogin($body['sub']);

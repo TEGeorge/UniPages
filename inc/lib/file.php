@@ -61,10 +61,6 @@ function getRepo($id) {
 }
 
 function getFile($id) {
-  //$DB = new DB;
-  //$sql = 'SELECT eid FROM Repository WHERE id = ?';
-  //$bind = array($id);
-  //$result = $DB -> query($sql, $bind);
   return $_SERVER['DOCUMENT_ROOT']."/public/repo/".$id;
 }
 
