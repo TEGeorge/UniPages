@@ -30,7 +30,8 @@ class DB
           LIMIT 1')->rowCount();
         if ($nRows==0) //INSERT DUMMY DATA IF NO DATA
         {
-          $this->pdo->exec(DUMMYDATA);
+          $id = $this->dummyUniversity();
+          $this->nullCourse($id);
         }
       }
       catch (PDOException $e) {
@@ -43,6 +44,35 @@ class DB
         exit;
       }
     }
+
+  private function dummyUniversity() {
+    $sql = "INSERT INTO Entity (type) VALUES ('university');";
+    $entity = $this->insertQuery($sql);
+    $bind = array($entity, 'University Of Portsmouth', 'Located in the heart of portsmouth');
+    $sql = 'INSERT INTO University (eid, name, description)
+    VALUES (?, ?, ?);';
+    $id = $this->insertQuery($sql, $bind);
+    $sql = 'UPDATE Entity
+    SET entity=?
+    WHERE id=?;';
+    $bind = array($id, $entity);
+    $entity = $this->insertQuery($sql);
+    return $id;
+  }
+
+  private function nullCourse($uniId) {
+    $sql = "INSERT INTO Entity (type) VALUES ('course');";
+    $entity = $this->insertQuery($sql);
+    $bind = array($entity, 'General', 'General course for those whose course does not exists yet', $uniId);
+    $sql = 'INSERT INTO Course (eid, name, description, university)
+    VALUES (?, ?, ?, ?);';
+    $id = $this->insertQuery($sql, $bind);
+    $sql = 'UPDATE Entity
+    SET entity=?
+    WHERE id=?;';
+    $bind = array($id, $entity);
+    $this->insertQuery($sql, $bind);
+  }
 
   public function query ($statement, $bind = null) {
     try{

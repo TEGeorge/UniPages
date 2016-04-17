@@ -43,6 +43,7 @@
                   <td><label for="">Course</label></td>
                   <td>
                     <select id="course" name="course">
+                      <option>NULL</option>
                     </select>
                   </td>
                 </tr>

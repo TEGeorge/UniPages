@@ -367,26 +367,4 @@ ALTER TABLE `University`
 
   ";
 
-CONST DUMMYDATA = "
-  INSERT INTO `Course` (`id`, `eid`, `name`, `description`, `university`) VALUES
-  (4, 49, 'Web Tech (2016) (2nd Year)', 'The study of web technologies', 3);
-
-  INSERT INTO `Entity` (`id`, `type`, `entity`) VALUES
-  (48, 'university', 3),
-  (49, 'course', 4),
-  (50, 'profile', 12);
-
-  INSERT INTO `Login` (`id`, `profile`) VALUES
-  ('117888963949520601927', 12);
-
-  INSERT INTO `Post` (`id`, `author`, `target`, `content`, `created`, `updated`, `flagged`, `isquestion`) VALUES
-  (21, 12, 49, 'How is everyone enjoying the year?', '2016-04-15 08:22:00', '2016-04-15 08:22:00', 0, 0);
-
-  INSERT INTO `Profile` (`id`, `eid`, `fname`, `surname`, `email`, `university`, `course`, `bio`, `privacy`) VALUES
-  (12, 50, 'Bob', 'Jones', 'whatanemail@email.com', 3, 4, 'Hello, I\'m Bob', 0);
-
-  INSERT INTO `University` (`id`, `eid`, `name`, `description`) VALUES
-  (3, 48, 'University Of Portsmouth', 'Located in the heart of portsmouth');
-";
-
 ?>

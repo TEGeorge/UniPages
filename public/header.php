@@ -26,7 +26,7 @@
       <button onclick="get('/logout');return false;">Log out</button>
       <button onclick="location.href='/search.php';">Search</button>
       <button onclick="location.href='/new/group.php';">Create Group</button>
-      <button onclick="location.href='/new/group.php';">Create Course</button>
+      <button onclick="location.href='/new/course.php';">Create Course</button>
     </div>
   </div>
 </header>

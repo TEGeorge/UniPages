@@ -54,8 +54,6 @@
                   <td><label for="">Course</label></td>
                   <td>
                     <select id="course" name="course">
-                      <option value="profile">Profile</option>
-                      <option value="group">Groups</option>
                     </select>
                   </td>
                 </tr>

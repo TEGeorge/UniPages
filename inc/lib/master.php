@@ -548,9 +548,9 @@
       $sql = "INSERT INTO Entity (type) VALUES ('university');";
       $entity = $DB->insertQuery($sql);
       $bind = array($entity, $data['name'], $data['description']);
-      $sql = 'INSERT INTO Profile (eid, name, description)
+      $sql = 'INSERT INTO University (eid, name, description)
       VALUES (?, ?, ?);';
-      $id = $DB->insertQuery($sql);
+      $id = $DB->insertQuery($sql, $bind);
       $sql = 'UPDATE Entity
       SET entity=?
       WHERE id=?;';
