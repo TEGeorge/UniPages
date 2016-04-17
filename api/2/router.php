@@ -34,7 +34,7 @@ switch ($route[0]) {
           send($meta, $result);
         }
         else {
-          $_SESSION['sub'] = 0;
+          $_SESSION['sub'] = rand(1,10000);
           $result = newProfile($data);
           $meta['status'] = 201;
           $meta['redirect'] = 'http://'.$_SERVER['HTTP_HOST'].'/home.php';

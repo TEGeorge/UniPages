@@ -56,7 +56,7 @@ class DB
     SET entity=?
     WHERE id=?;';
     $bind = array($id, $entity);
-    $entity = $this->insertQuery($sql);
+    $entity = $this->insertQuery($sql, $bind);
     return $id;
   }
 

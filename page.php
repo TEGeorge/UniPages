@@ -6,16 +6,16 @@
   var load = function (page) {
     switch(page['type']) {
       case 'profile':
-        window.location = `http://localhost:8080/profile.php?id=${page['entity']}`;
+        window.location = window.location.origin+`/profile.php?id=${page['entity']}`;
         break;
       case 'course':
-        window.location = `http://localhost:8080/course.php?id=${page['entity']}`;
+        window.location = window.location.origin+`/course.php?id=${page['entity']}`;
         break;
       case 'university':
-        window.location = `http://localhost:8080/university.php?id=${page['entity']}`;
+        window.location = window.location.origin+`/university.php?id=${page['entity']}`;
         break;
       case 'group':
-        window.location = `http://localhost:8080/group.php?id=${page['entity']}`;
+        window.location = window.location.origin+`/group.php?id=${page['entity']}`;
         break;
       }
   };

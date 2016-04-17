@@ -555,6 +555,6 @@
       SET entity=?
       WHERE id=?;';
       $bind = array($id, $entity);
-      $entity = $DB->insertQuery($sql);
+      $entity = $DB->insertQuery($sql, $bind);
       $DB->close();
   }
