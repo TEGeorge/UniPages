@@ -60,7 +60,6 @@
               </table>
               </div>
               <button onclick="downloadFile(currentRowId, currentName)">Download</button>
-              <button type="submit">Delete</button>
             </div>
           </li>
           <li class="panel">

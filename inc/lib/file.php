@@ -6,7 +6,7 @@ function isFile ($userfile) {
     return;
   }
   else {
-    invalid($_FILES);
+    invalid('No file found');
   }
 }
 
