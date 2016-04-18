@@ -25,7 +25,7 @@
     <div class="center">
         <li class="panel">
           <div class="offset">
-            <h2>New User:</h2>
+            <h2>New Course:</h2>
             <form class="" onsubmit="newCourse(name.value, description.value);return false;">
               <table style="width:50%">
                 <tr>

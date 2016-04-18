@@ -483,7 +483,7 @@
       $DB = new DB();
       $sql = "INSERT INTO Entity (type) VALUES ('group');";
       $entity = $DB->insertQuery($sql);
-      if (isset($data['user']['course'])) {
+      if (isset($data['course'])) {
           $course = $_SESSION['user']['course']['id'];
       } else {
           $course = null;

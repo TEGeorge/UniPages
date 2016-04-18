@@ -25,8 +25,8 @@
     <div class="center">
         <li class="panel">
           <div class="offset">
-            <h2>New User:</h2>
-            <form class="" onsubmit="newGroup(name.value, description.value, university.value, course.value, private.value, unit.value);return false;">
+            <h2>New Group:</h2>
+            <form class="" onsubmit="newGroup(name.value, description.value, university.value, course.value, private.value, unit.checked);return false;">
               <table style="width:50%">
                 <tr>
                   <td><label for="name">Name</label></td>
@@ -43,7 +43,6 @@
                   <td><label for="">Course</label></td>
                   <td>
                     <select id="course" name="course">
-                      <option>NULL</option>
                     </select>
                   </td>
                 </tr>
